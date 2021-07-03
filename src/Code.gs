@@ -26,19 +26,10 @@ function sanitizeProperties(){
 
 function onInstall(e){
   onOpen(e);
-  /* moved to menuitem
-  try{
-    setupTZ()
-  }
-  catch(e){
-  }
-  */
 }
 function onOpen(e) {
-  var menu = DocumentApp.getUi().createAddonMenu();
-  if (e && e.authMode == ScriptApp.AuthMode.NONE) {
-     // installed but not enabled
-     menu.addItem('Yesterday\'s date', 'insertYesterday')
+  DocumentApp.getUi().createAddonMenu()
+         .addItem('Yesterday\'s date', 'insertYesterday')
          .addItem('Today\'s date', 'insertNow')
          .addItem('Tomorrow\'s date', 'insertTomorrow')
          .addSeparator()
@@ -46,31 +37,7 @@ function onOpen(e) {
          .addSeparator()
          .addItem('Set Time Zone', 'setupTZ')
          .addItem('View more options', 'showSidebar')
-         
-  } else {
-    // installed and enabled
-     try{
-       menu.addItem(i18n('Yesterday\'s date'), 'insertYesterday')
-         .addItem(i18n('Today\'s date'), 'insertNow')
-         .addItem(i18n('Tomorrow\'s date'), 'insertTomorrow')
-         .addSeparator()
-         .addItem(i18n('Calendar'), 'showCalendar')
-         .addSeparator()
-         .addItem('Set Time Zone', 'setupTZ')
-         .addItem(i18n('View more options'), 'showSidebar')
-     }
-     catch(e){
-       menu.addItem('Yesterday\'s date', 'insertYesterday')
-         .addItem('Today\'s date', 'insertNow')
-         .addItem('Tomorrow\'s date', 'insertTomorrow')
-         .addSeparator()
-         .addItem('Calendar', 'showCalendar')
-         .addSeparator()
-         .addItem('Set Time Zone', 'setupTZ')
-         .addItem('View more options', 'showSidebar')
-     }
-  }
-  menu.addToUi();
+         .addToUi();
 }
 
 function showSidebar() {
