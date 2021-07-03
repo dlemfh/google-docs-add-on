@@ -3,7 +3,7 @@
   <head>
     <base target="_top">
     <link rel="stylesheet" href="https://ssl.gstatic.com/docs/script/css/add-ons.css">
-    <style>    
+    <style>
     #calendar td.light a.cell{
       color:#e4e4e4;
     }
@@ -28,7 +28,7 @@
       width:40px;
     }
     #calendar-month{
-      width:20px;    
+      width:20px;
     }
     </style>
     <script language="javascript">
@@ -38,7 +38,7 @@
     function renderCalendar(today){
 
       var thisDate = -1
-      
+
       if ((!today) || (today.getFullYear()==now.getFullYear() && today.getMonth()==now.getMonth())) {
         // this month
         today = now
@@ -48,16 +48,16 @@
       else{
         document.getElementById('go-today').style.opacity = '100'
       }
-      
+
       var rows = []
-      
+
       var weekdays = ['Sun','Mon','Tue','Wed','Thu','Fri','Sat']
       var cols = []
       for (var i=0;i<7;i++){
         cols.push('<th>'+weekdays[i]+'</th>')
       }
       rows.push('<tr>'+cols.join('')+'</tr>')
-      
+
       firstday = new Date(today.getFullYear(),today.getMonth(),1)
       var day = firstday.getDay()
       var d00 = new Date(firstday.getTime())
@@ -65,7 +65,7 @@
 
       document.querySelector('#calendar-year').value = firstday.getFullYear()
       document.querySelector('#calendar-month').value = firstday.getMonth()+1
-      
+
       // first row of date
       cols = []
       for (var i=0;i<day;i++){
@@ -83,7 +83,7 @@
       d = 7 - day
       var theday = new Date(firstday.getTime())
       theday.setDate(theday.getDate()+(7-day))
-      
+
       while (d <= 31){
         d = theday.getDate()
         var cls = d==thisDate ? ' class="today"' : ''
@@ -99,7 +99,7 @@
       }
       cols.push('</tr>')
       rows.push(cols.join(''))
-      
+
       var tbody = document.querySelector('#calendar-body')
       tbody.innerHTML = rows.join('')
 
@@ -137,7 +137,7 @@
       }
       insertToDoc(targetDate)
     }
-    
+
     function goPrev(){
       var m = firstday.getMonth()
       var y = firstday.getFullYear()
@@ -146,7 +146,7 @@
       var newToday =  (y==now.getFullYear() && m==now.getMonth()) ? null : new Date(y,m,1)
       renderCalendar(newToday)
     }
-    
+
     function goNext(){
       var m = firstday.getMonth()
       var y = firstday.getFullYear()
@@ -155,7 +155,7 @@
       var newToday =  (y==now.getFullYear() && m==now.getMonth()) ? null : new Date(y,m,1)
       renderCalendar(newToday)
     }
-    
+
     function insertToDoc(today){
       //console.log(today)
       var stopLoading = function(){
@@ -163,9 +163,9 @@
           google.script.host.close()
         }
       }
-      google.script.run.withSuccessHandler(stopLoading).withFailureHandler(stopLoading).insertDate(today.getFullYear(),today.getMonth(),today.getDate());  
+      google.script.run.withSuccessHandler(stopLoading).withFailureHandler(stopLoading).insertDate(today.getFullYear(),today.getMonth(),today.getDate());
     }
-    
+
     window.addEventListener('DOMContentLoaded',function(){
         renderCalendar()
         document.getElementById('prev-btn').onclick = function(evt){
@@ -182,10 +182,10 @@
         }
         document.getElementById('calendar-year').onfocus = function(evt){
           evt.currentTarget.style.border = 'solid 1px blue'
-        }        
+        }
         document.getElementById('calendar-year').onblur = function(evt){
           evt.currentTarget.style.border = 'none'
-        }        
+        }
         document.getElementById('calendar-year').onchange = function(evt){
           var y = parseInt(evt.currentTarget.value)
           if ((!y) || y < 1000 || y > 3000){
@@ -198,10 +198,10 @@
         }
         document.getElementById('calendar-month').onfocus = function(evt){
           evt.currentTarget.style.border = 'solid 1px blue'
-        }        
+        }
         document.getElementById('calendar-month').onblur = function(evt){
           evt.currentTarget.style.border = 'none'
-        }        
+        }
         document.getElementById('calendar-month').onchange = function(evt){
           var m = parseInt(evt.currentTarget.value)
           if ((!m) || m<1){
@@ -238,5 +238,3 @@
     </table>
   </body>
 </html>
-
-

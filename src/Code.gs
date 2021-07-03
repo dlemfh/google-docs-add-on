@@ -11,16 +11,16 @@ function my_parseInt(s){
 var userlocale=Session.getActiveUserLocale();
 if (userlocale.indexOf('en_')==0) userlocale = 'en';
 
-var _userProperties;//singleton 
+var _userProperties;//singleton
 function getUserProperty(){
   if (_userProperties) return _userProperties;
   _userProperties = PropertiesService.getUserProperties();
   return _userProperties;
 }
-//debug - reset properties
-function sanitizeProperties(){
-  getUserProperty().deleteAllProperties();
-}
+// //debug - reset properties
+// function sanitizeProperties(){
+//   getUserProperty().deleteAllProperties();
+// }
 //var objs = userProperties.getProperties()
 //for (var key in objs){Logger.log('PROP:'+key+'='+objs[key])};
 
@@ -40,20 +40,12 @@ function onOpen(e) {
          .addToUi();
 }
 
-function showSidebar() {
-  DocumentApp.getUi().showSidebar(
-      HtmlService
-          .createHtmlOutputFromFile('sidebar.html')
-          .setSandboxMode(HtmlService.SandboxMode.IFRAME)
-          .setTitle(i18n('Text Factory'))
-          .setWidth(150)); /* pixels */
-}
 function showCalendar(){
   DocumentApp.getUi().showModelessDialog(
       HtmlService
           .createHtmlOutputFromFile('calendar.html')
           .setSandboxMode(HtmlService.SandboxMode.IFRAME)
-          .setTitle(i18n('Calendar'))
+          .setTitle('Calendar')
           .setHeight(315)
           .setWidth(270),
       'Calendar')
@@ -89,7 +81,7 @@ function getDefaultFormats(){
 }
 function getProperties() {
   //var userProperties = PropertiesService.getUserProperties();
-  var formats; 
+  var formats;
   var fmts = getUserProperty().getProperty('formats');
   if (fmts) formats = fmts.split('\t')
   else formats = getDefaultFormats();
@@ -113,7 +105,7 @@ var locale={'en':{
 }
 function initializeUserLocale(){
   var uprop = getUserProperty();
-  if (userlocale != 'en'){  
+  if (userlocale != 'en'){
     var currentLocale = uprop.getProperty('userlocale');
     if (currentLocale==userlocale){
       //do nothing
@@ -136,111 +128,32 @@ function initializeUserLocale(){
     }
     var days=[],daysshort=[],months=[],monthsshort=[],x;
     for (var i=0;i<7;i++){
-      x = i18n(locale.en.days[i])
+      x = locale.en.days[i]
       if (x===null){
         for (var k=i;k<7;k++){
           days.push(locale.en.days[k]);
-          daysshort.push(locale.en.days[k]);          
+          daysshort.push(locale.en.days[k]);
         }
         break;
-      }      
+      }
       days.push(x);
       daysshort.push(x);
     };
     for (var i=0;i<12;i++){
-      x = i18n(locale.en.months[i]);
+      x = locale.en.months[i];
       if (x===null){
         for (var k=i;k<12;k++){
           days.push(locale.en.months[k]);
-          daysshort.push(locale.en.months[k]);          
+          daysshort.push(locale.en.months[k]);
         }
         break;
-      }      
+      }
       months.push(x);
       monthsshort.push(x);
     }
     locale[userlocale] = {days:days,months:months,daysshort:daysshort,monthsshort:monthsshort};
   }
 }
-/* i18n utilities */
-var _i18nc=0;
-function _i18n(x,nosave){
-    var t = getUserProperty().getProperty('*'+userlocale+x)
-    if (t){
-      //Logger.log('hit '+t+';'+nosave);
-      return nosave ? [t,true] : t;
-    }
-    _i18nc += 1;
-    try{
-      if ((_i18nc+1)%20==0) Utilities.sleep(1000);
-      //Logger.log('miss '+x+';'+nosave+';'+_i18nc);
-      t = LanguageApp.translate(x,'en',userlocale);
-    }
-    catch(e){
-       //Logger.log('i18n:'+e);
-       return null;
-    }
-    if (!nosave) getUserProperty().setProperty('*'+userlocale+x,t);
-    return nosave ? [t,false] : t;
-}
-function i18n(x,nosave){
-  var maxLengthInCache = 200;
-  if (userlocale==='en') return nosave ? [[x,[x,true]]] : x ;
-  else {
-      // max length in cache is 255, keep the size less than 200
-      if (x.length < maxLengthInCache) return nosave ? [[x,_i18n(x,true)]] : _i18n(x) ;
-      var xs = [],ret;
-      for (var i=0,l=x.length;i<l;i+=maxLengthInCache){
-        var t = x.substr(i,maxLengthInCache)
-        ret = _i18n(t,nosave)
-        if (ret===null) return null;
-        else if (nosave) xs.push([t,ret]) 
-        else xs.push(ret);
-      }
-      return nosave ? xs : xs.join('');
-  };
-}
-function translate(texts,src){
-  //if (userlocale==='en') return texts;
-  var rets= [],ret;
-  var newtranlations = {};
-  var cache = {};
-  var hasNewtranlations = false;
-  for (var i=0,l=texts.length;i<l;i++){
-      ret = cache[texts[i]];
-      if (ret) {rets.push(ret);continue}
-      ret = i18n(texts[i],true);
-      if (ret===null){
-        // too many calls to LanguageApp.translate
-        for (var k=i;k<l;k++){
-          rets.push(texts[k]);
-        }
-        break;
-      }
-      // collect translated
-      var t = [];
-      for (var j=0;j<ret.length;j++){
-        if (ret[j][1]===null){
-          //fail to translate
-          t.push(ret[j][0]);
-          continue;
-        }
-        // fail to hit, save it
-        if (ret[j][1][1]===false) {newtranlations['*'+userlocale+ret[j][0]] =ret[j][1][0]; hasNewtranlations=true};
-        t.push(ret[j][1][0]);
-      }
-      ret = t.join('');
-      rets.push(ret);
-      cache[texts[i]] = ret;
-  }
-  // update db
-  if (hasNewtranlations){
-    getUserProperty().setProperties(newtranlations, false)
-  }
-  
-  return rets
-}
-/* end of i18n utility */
 
 /* manipulation the doc starts*/
 function getSelection(warnning){
@@ -250,7 +163,7 @@ function getSelection(warnning){
     return selection;
   }
   else{
-    if (warnning) DocumentApp.getUi().alert(i18n('Please select text to format.'));
+    if (warnning) DocumentApp.getUi().alert('Please select text to format.');
     return;
   }
 }
@@ -267,11 +180,11 @@ function replaceSelection(txt,fill){
     return cs.join('')
   }
   for (var i = 0; i < selectedElements.length; ++i) {
-    var selectedElement = selectedElements[i];      
+    var selectedElement = selectedElements[i];
     // Only modify elements that can be edited as text; skip images and other
     // non-text elements.
     var ele = selectedElement.getElement();
-    var text = ele.editAsText();          
+    var text = ele.editAsText();
     if (selectedElement.isPartial()) {
       var t = text.getText();
       var txt2add;
@@ -301,7 +214,7 @@ function replaceSelection(txt,fill){
         else rangeBuilder.addElement(ele)
       }
     }
-  }        
+  }
   doc.setSelection(rangeBuilder.build());
   return true;
 }
@@ -323,7 +236,7 @@ function insertAtCursor(txt){
         }
         doc.setSelection(rangeBuilder.build());
     } else {
-      DocumentApp.getUi().alert(i18n('Cannot insert text at this cursor location.'));
+      DocumentApp.getUi().alert('Cannot insert text at this cursor location.');
       return;
     }
   } else {
@@ -333,11 +246,11 @@ function insertAtCursor(txt){
         var selectedElements = selection.getSelectedElements();
         var rangeBuilder = doc.newRange();
         for (var i = 0; i < selectedElements.length; ++i) {
-          var selectedElement = selectedElements[i];      
+          var selectedElement = selectedElements[i];
           // Only modify elements that can be edited as text; skip images and other
           // non-text elements.
           var ele = selectedElement.getElement();
-          var text = ele.editAsText();          
+          var text = ele.editAsText();
           if (selectedElement.isPartial()) {
             var t = text.getText();
             var txt2add;
@@ -364,13 +277,13 @@ function insertAtCursor(txt){
             else{
               if (t == DocumentApp.ElementType.TEXT || t == DocumentApp.ElementType.PARAGRAPH) text.removeFromParent();
               else rangeBuilder.addElement(ele)
-            }            
+            }
           }
-        }        
+        }
         doc.setSelection(rangeBuilder.build());
         return;
     }
-    DocumentApp.getUi().alert(i18n('Cannot find a cursor in the document.'));
+    DocumentApp.getUi().alert('Cannot find a cursor in the document.');
   }
 }
 function selectionReplaceWith(char){
@@ -443,7 +356,7 @@ function applyToSelected(callback,selectionWarning,params){
       text.setText(callback.apply(this,args));
       rangeBuilder.addElement(selectedElement.getElement())
     }
-    restoreTextStyle(text,style);  
+    restoreTextStyle(text,style);
   }
   DocumentApp.getActiveDocument().setSelection(rangeBuilder.build());
 }
@@ -721,7 +634,7 @@ function getServerValues(){
     //setProperty('tzoffset',tzoffset)
     var tzoffset = getTimezoneOffset()
     if (typeof(tzoffset)=='undefined') tzoffset = null
-    
+
     var user = Session.getActiveUser();
     var days = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday','Saturday'];
     var months = [
@@ -729,20 +642,20 @@ function getServerValues(){
       'August', 'September', 'October', 'November', 'December'
     ];
     var properties = getProperties();
-    
+
     /*
-    * temporaryly disabled for not been tested feature 
+    * temporaryly disabled for not been tested feature
 
     var rets = {locale:userlocale,properties:properties,textOptions:getTextsOptions()};
-    
+
     */
     var rets = {locale:userlocale,properties:properties,textOptions:false,tzoffset:tzoffset};
-    
+
     if (userlocale=='en'){
       //pass
     }
     else{
-      //if (!locale[userlocale])      
+      //if (!locale[userlocale])
       initializeUserLocale();
       rets.localedata = locale[userlocale];
     }
@@ -751,7 +664,7 @@ function getServerValues(){
   catch(e){
     var rets = {locale:userlocale,properties:{formats:[]},textOptions:false,err:''+e};
   }
-   
+
 }
 /*
  * Hebrew Calendar
@@ -776,44 +689,44 @@ function getHebrew(d,key,callback){
  * Lunar Calendar
  */
 function LunarCalendar(){
-    this.lunarInfo=new Array(  
-        0x04bd8,0x04ae0,0x0a570,0x054d5,0x0d260,0x0d950,0x16554,0x056a0,0x09ad0,0x055d2,  
-        0x04ae0,0x0a5b6,0x0a4d0,0x0d250,0x1d255,0x0b540,0x0d6a0,0x0ada2,0x095b0,0x14977,  
-        0x04970,0x0a4b0,0x0b4b5,0x06a50,0x06d40,0x1ab54,0x02b60,0x09570,0x052f2,0x04970,  
-        0x06566,0x0d4a0,0x0ea50,0x06e95,0x05ad0,0x02b60,0x186e3,0x092e0,0x1c8d7,0x0c950,  
-        0x0d4a0,0x1d8a6,0x0b550,0x056a0,0x1a5b4,0x025d0,0x092d0,0x0d2b2,0x0a950,0x0b557,  
-        0x06ca0,0x0b550,0x15355,0x04da0,0x0a5b0,0x14573,0x052b0,0x0a9a8,0x0e950,0x06aa0,  
-        0x0aea6,0x0ab50,0x04b60,0x0aae4,0x0a570,0x05260,0x0f263,0x0d950,0x05b57,0x056a0,  
-        0x096d0,0x04dd5,0x04ad0,0x0a4d0,0x0d4d4,0x0d250,0x0d558,0x0b540,0x0b6a0,0x195a6,  
-        0x095b0,0x049b0,0x0a974,0x0a4b0,0x0b27a,0x06a50,0x06d40,0x0af46,0x0ab60,0x09570,  
-        0x04af5,0x04970,0x064b0,0x074a3,0x0ea50,0x06b58,0x055c0,0x0ab60,0x096d5,0x092e0,  
-        0x0c960,0x0d954,0x0d4a0,0x0da50,0x07552,0x056a0,0x0abb7,0x025d0,0x092d0,0x0cab5,  
-        0x0a950,0x0b4a0,0x0baa4,0x0ad50,0x055d9,0x04ba0,0x0a5b0,0x15176,0x052b0,0x0a930,  
-        0x07954,0x06aa0,0x0ad50,0x05b52,0x04b60,0x0a6e6,0x0a4e0,0x0d260,0x0ea65,0x0d530,  
-        0x05aa0,0x076a3,0x096d0,0x04bd7,0x04ad0,0x0a4d0,0x1d0b6,0x0d250,0x0d520,0x0dd45,  
-        0x0b5a0,0x056d0,0x055b2,0x049b0,0x0a577,0x0a4b0,0x0aa50,0x1b255,0x06d20,0x0ada0,  
-        0x14b63); 
-        
-    this.Gan=new Array("甲","乙","丙","丁","戊","己","庚","辛","壬","癸");  
-    this.Zhi=new Array("子","丑","寅","卯","辰","巳","午","未","申","酉","戌","亥");  
-    this.nStr1 = new Array('','一','二','三','四','五','六','七','八','九','十');  
+    this.lunarInfo=new Array(
+        0x04bd8,0x04ae0,0x0a570,0x054d5,0x0d260,0x0d950,0x16554,0x056a0,0x09ad0,0x055d2,
+        0x04ae0,0x0a5b6,0x0a4d0,0x0d250,0x1d255,0x0b540,0x0d6a0,0x0ada2,0x095b0,0x14977,
+        0x04970,0x0a4b0,0x0b4b5,0x06a50,0x06d40,0x1ab54,0x02b60,0x09570,0x052f2,0x04970,
+        0x06566,0x0d4a0,0x0ea50,0x06e95,0x05ad0,0x02b60,0x186e3,0x092e0,0x1c8d7,0x0c950,
+        0x0d4a0,0x1d8a6,0x0b550,0x056a0,0x1a5b4,0x025d0,0x092d0,0x0d2b2,0x0a950,0x0b557,
+        0x06ca0,0x0b550,0x15355,0x04da0,0x0a5b0,0x14573,0x052b0,0x0a9a8,0x0e950,0x06aa0,
+        0x0aea6,0x0ab50,0x04b60,0x0aae4,0x0a570,0x05260,0x0f263,0x0d950,0x05b57,0x056a0,
+        0x096d0,0x04dd5,0x04ad0,0x0a4d0,0x0d4d4,0x0d250,0x0d558,0x0b540,0x0b6a0,0x195a6,
+        0x095b0,0x049b0,0x0a974,0x0a4b0,0x0b27a,0x06a50,0x06d40,0x0af46,0x0ab60,0x09570,
+        0x04af5,0x04970,0x064b0,0x074a3,0x0ea50,0x06b58,0x055c0,0x0ab60,0x096d5,0x092e0,
+        0x0c960,0x0d954,0x0d4a0,0x0da50,0x07552,0x056a0,0x0abb7,0x025d0,0x092d0,0x0cab5,
+        0x0a950,0x0b4a0,0x0baa4,0x0ad50,0x055d9,0x04ba0,0x0a5b0,0x15176,0x052b0,0x0a930,
+        0x07954,0x06aa0,0x0ad50,0x05b52,0x04b60,0x0a6e6,0x0a4e0,0x0d260,0x0ea65,0x0d530,
+        0x05aa0,0x076a3,0x096d0,0x04bd7,0x04ad0,0x0a4d0,0x1d0b6,0x0d250,0x0d520,0x0dd45,
+        0x0b5a0,0x056d0,0x055b2,0x049b0,0x0a577,0x0a4b0,0x0aa50,0x1b255,0x06d20,0x0ada0,
+        0x14b63);
+
+    this.Gan=new Array("甲","乙","丙","丁","戊","己","庚","辛","壬","癸");
+    this.Zhi=new Array("子","丑","寅","卯","辰","巳","午","未","申","酉","戌","亥");
+    this.nStr1 = new Array('','一','二','三','四','五','六','七','八','九','十');
     this.nStr2 = new Array('初','十','廿','卅','□');
 }
 LunarCalendar.prototype = {
-    lYearDays : function(y) {  
-        var i, sum = 348;  
-        for(i=0x8000; i>0x8; i>>=1) sum += (this.lunarInfo[y-1900] & i)? 1: 0;  
-        return(sum+this.leapDays(y));  
+    lYearDays : function(y) {
+        var i, sum = 348;
+        for(i=0x8000; i>0x8; i>>=1) sum += (this.lunarInfo[y-1900] & i)? 1: 0;
+        return(sum+this.leapDays(y));
     },
-    leapDays : function(y) {  
-        if(this.leapMonth(y))  return((this.lunarInfo[y-1900] & 0x10000)? 30: 29);  
-        else return(0);  
+    leapDays : function(y) {
+        if(this.leapMonth(y))  return((this.lunarInfo[y-1900] & 0x10000)? 30: 29);
+        else return(0);
     },
-    leapMonth : function(y) {  
-        return(this.lunarInfo[y-1900] & 0xf);  
+    leapMonth : function(y) {
+        return(this.lunarInfo[y-1900] & 0xf);
     },
-    monthDays : function (y,m) {  
-        return( (this.lunarInfo[y-1900] & (0x10000>>m))? 30: 29 );  
+    monthDays : function (y,m) {
+        return( (this.lunarInfo[y-1900] & (0x10000>>m))? 30: 29 );
     },
     md2Str:function(n,month){
       var n1 = Math.floor(n/10)
@@ -821,51 +734,51 @@ LunarCalendar.prototype = {
       if (month) return (n1==0 ? '' : this.nStr2[n1])+(n0==0 ? '' : this.nStr1[n0])
       else return (this.nStr2[n1])+(n0==0 ? '' : this.nStr1[n0])
     },
-    toLunar: function (objDate) {  
+    toLunar: function (objDate) {
 
         var lunarDate = {}
-      
-        var i, leap=0, temp=0;  
-        var offset   = (Date.UTC(objDate.getFullYear(),objDate.getMonth(),objDate.getDate()) - Date.UTC(1900,0,31))/86400000;  
-  
-        for(i=1900; i<2050 && offset>0; i++) { temp=this.lYearDays(i); offset-=temp; }  
-  
-        if(offset<0) { offset+=temp; i--; }  
-  
-        lunarDate.year = i;  
-  
-        leap = this.leapMonth(i); //闰哪个月  
-        lunarDate.isLeap = false;  
-  
-        for(i=1; i<13 && offset>0; i++) {  
-            //闰月  
-            if(leap>0 && i==(leap+1) && lunarDate.isLeap==false)  
-                { --i; lunarDate.isLeap = true; temp = this.leapDays(lunarDate.year); }  
-            else  
-                { temp = this.monthDays(lunarDate.year, i); }  
-  
-            //解除闰月  
-            if(lunarDate.isLeap==true && i==(leap+1)) lunarDate.isLeap = false;  
-  
-            offset -= temp;  
-        }  
-  
-        if(offset==0 && leap>0 && i==leap+1)  
-        if(lunarDate.isLeap)  
-            { tlunarDatehis.isLeap = false; }  
-        else  
-            { lunarDate.isLeap = true; --i; }  
-  
-        if(offset<0){ offset += temp; --i; }  
-  
+
+        var i, leap=0, temp=0;
+        var offset   = (Date.UTC(objDate.getFullYear(),objDate.getMonth(),objDate.getDate()) - Date.UTC(1900,0,31))/86400000;
+
+        for(i=1900; i<2050 && offset>0; i++) { temp=this.lYearDays(i); offset-=temp; }
+
+        if(offset<0) { offset+=temp; i--; }
+
+        lunarDate.year = i;
+
+        leap = this.leapMonth(i); //闰哪个月
+        lunarDate.isLeap = false;
+
+        for(i=1; i<13 && offset>0; i++) {
+            //闰月
+            if(leap>0 && i==(leap+1) && lunarDate.isLeap==false)
+                { --i; lunarDate.isLeap = true; temp = this.leapDays(lunarDate.year); }
+            else
+                { temp = this.monthDays(lunarDate.year, i); }
+
+            //解除闰月
+            if(lunarDate.isLeap==true && i==(leap+1)) lunarDate.isLeap = false;
+
+            offset -= temp;
+        }
+
+        if(offset==0 && leap>0 && i==leap+1)
+        if(lunarDate.isLeap)
+            { tlunarDatehis.isLeap = false; }
+        else
+            { lunarDate.isLeap = true; --i; }
+
+        if(offset<0){ offset += temp; --i; }
+
         lunarDate.year = this.cyclical(lunarDate.year)
         lunarDate.month = this.md2Str(i,true)
         lunarDate.day = this.md2Str(offset + 1);
         return lunarDate
     },
-    cyclical:function(year) {  
+    cyclical:function(year) {
         var num = year - 1900 + 36
-        return(this.Gan[num%10]+this.Zhi[num%12]);  
+        return(this.Gan[num%10]+this.Zhi[num%12]);
     }
 }
 
@@ -922,7 +835,7 @@ function tzOffset(offset){
 
 function strftime(format, date,loc) {
     date = date || getNewDate();
-    var locfmtpat = /\%[abAB]/; 
+    var locfmtpat = /\%[abAB]/;
     if (locfmtpat.test(format) && !locale[loc]){
       initializeUserLocale();
     }
@@ -989,9 +902,9 @@ function strftime(format, date,loc) {
                   break
               default:
                   result = result + format[i]+format[i + 1]+format[i + 2]+format[i + 3]
-            }            
+            }
             i += 3;
-        }  
+        }
         else if (format[i] === '%' && (i+3<len) && (format[i+1]=='L') && (format[i+2]=='u')) {
             if (lu.year==0) {
               var key = date.getFullYear()+':'+date.getMonth()+':'+date.getDate()
@@ -1015,16 +928,16 @@ function strftime(format, date,loc) {
                   break
               default:
                   result = result + format[i]+format[i + 1]+format[i + 2]+format[i + 3]
-            }            
+            }
             i += 3;
         }
-        else if (format[i] === '%' && (i+3<len) && (format[i+1]=='e') && (format[i+2]=='n') && (format[i+3]=='b'||format[i+3]=='B')) {        
+        else if (format[i] === '%' && (i+3<len) && (format[i+1]=='e') && (format[i+2]=='n') && (format[i+3]=='b'||format[i+3]=='B')) {
           // %enB, %enB
             result = result + (format[i+3]=='b' ? locale.en.monthsshort[date.getMonth()] : locale.en.months[date.getMonth()])
-            i += 3;          
+            i += 3;
         }
         else if ((format[i] == '%') && (i+2<len) && (format[i+1]=='*')) {
-            // %*d, %*H, %*S, 
+            // %*d, %*H, %*S,
             result = result + my_parseInt(fields[format[i + 2]]);
             i+=2;
         }
@@ -1040,7 +953,7 @@ function strftime(format, date,loc) {
             else n = n+'th'
             result = result + n;
             i += 2;
-        }        
+        }
         else if (format[i] === '%' && (i+1<len)) {
             // one char format, ex %Y, %M
             result = result + fields[format[i + 1]];
