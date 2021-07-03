@@ -43,7 +43,7 @@ select {
   box-shadow:         none;
 }
 .tab-title:hover{
-  background-color:#f0f0f0;  
+  background-color:#f0f0f0;
   -webkit-box-shadow: 0px 0px 1px 0px rgba(50, 50, 50, 0.25);
   -moz-box-shadow:    0px 0px 1px 0px rgba(50, 50, 50, 0.25);
   box-shadow:         0px 0px 1px 0px rgba(50, 50, 50, 0.25);
@@ -86,9 +86,9 @@ select.help:hover,button.help:hover{
 }
 .helpframe{
   display:none;
-  border-radius: 5px; 
-  -moz-border-radius: 5px; 
-  -webkit-border-radius: 5px; 
+  border-radius: 5px;
+  -moz-border-radius: 5px;
+  -webkit-border-radius: 5px;
   border: 1px solid #c0c0c0;
   color:black;
   padding:5px;
@@ -228,7 +228,7 @@ option.option-label+option:last-child{
   outline: 0;
   position: absolute;
   color: #000;
-  padding: 15px 21px;  
+  padding: 15px 21px;
 }
 .modal-dialog button{
   -webkit-border-radius: 2px;
@@ -252,7 +252,7 @@ option.option-label+option:last-child{
   margin:0;
   min-width: 72px;
   outline: 0;
-  padding: 0 8px;  
+  padding: 0 8px;
 }
 .modal-dialog button+button{
   margin-left:20px;
@@ -273,7 +273,7 @@ option.option-label+option:last-child{
 <div class="sidebar" style="padding:5px 0px;margin:-8px">
   <div class="tab-bar">
     <div class="tab-title active" tab="t1" onclick="setActiveTab('t1')"><span class="i18n">Insert Date</span></div>
-    <!-- temporaryly disabled for not been tested new feature 
+    <!-- temporaryly disabled for not been tested new feature
     <div class="tab-title" tab="t3" onclick="setActiveTab('t3')"><span class="i18n">Insert Text</span></div>
     -->
     <div class="tab-title" tab="t2" onclick="setActiveTab('t2')"><span class="i18n">Format Text</span></div>
@@ -298,18 +298,18 @@ option.option-label+option:last-child{
           <div class="block form-group">
             <button class="i18n blue" id="insbtn" onclick="insertDateTimeSelect()">Insert Date</button>
             <button class="i18n" id="insdteditbtn" onclick="showHelp('eo',true)">Edit Formats</button>
-            <button class="i18n" style="display:none;" id="insdteditbtncls" helpname="eo" onclick="closeHelp(this)">Close Editing</button>  
-            
+            <button class="i18n" style="display:none;" id="insdteditbtncls" helpname="eo" onclick="closeHelp(this)">Close Editing</button>
+
           </div>
           <span class="helppos" helpname="eo"></span>
 
  </div>
- <!-- temporaryly disabled for not been tested new feature 
- <div class="tab" tab="t3" style="min-height:500px">          
+ <!-- temporaryly disabled for not been tested new feature
+ <div class="tab" tab="t3" style="min-height:500px">
           <div class="block form-groups" id="textoptions-allgroup">
             <label><span class="i18n help" helpname="tsg" helptype="hover">Select Group</span>:</label>
             <select style="width:75%;" onchange="renderTextOptions(null,this.selectedIndex)"></select>
-          </div>      
+          </div>
           <div class="block form-group" id="textoptions-group">
             <label><span class="i18n help" helpname="tst" helptype="hover">Select Text</span>:</label>
             <select style="width:75%;"></select>
@@ -357,7 +357,7 @@ option.option-label+option:last-child{
       </div>
       <div class="block form-group">
         <span style="color:#c0c0c0">version: 2017/11/8</span>
-      </div>      
+      </div>
   </div><!--end of tab-->
 </div>
 <div id="fbz" class="flat-btn-zoomin"></div>
@@ -436,7 +436,7 @@ option.option-label+option:last-child{
         <tr><th>%HuD</th><td>日</td></tr>
         </tbody></table>
         <div style="height:10px;background-color:transparent"></div>
-      </div>      
+      </div>
     </div>
   </div>
   <div name="cite" class="i18n">
@@ -511,7 +511,7 @@ option.option-label+option:last-child{
   <span class="localI18n">Unknow</span>
   <span class="localI18n">Show Syntax</span>
   <span class="localI18n">Hide Syntax</span>
-  <span class="localI18n">New Format</span>  
+  <span class="localI18n">New Format</span>
   <span class="localI18n">Input new format here</span>
   <span class="localI18n">Working</span>
   <span class="localI18n">Delete this item</span>
@@ -563,7 +563,7 @@ function loading(yes){
     document.getElementById('loading-text').innerHTML = title;
     document.getElementById('loading').style.display='block';
     document.getElementById('loading').style.top = (window.pageYOffset+50)+'px'
-    document.querySelector('.sidebar').style.opacity = 0.5;  
+    document.querySelector('.sidebar').style.opacity = 0.5;
   }
   else{
     // stop loading
@@ -578,7 +578,7 @@ function confirm(title,callback){
   dialog.querySelector('.title').innerHTML = title;
   dialog.style.display='block';
   dialog.style.top = (window.pageYOffset+150)+'px'
-  document.querySelector('.sidebar').style.opacity = 0.5;  
+  document.querySelector('.sidebar').style.opacity = 0.5;
   var cleanup = function(yes){
     callback(yes)
     dialog.querySelector('.yes').onclick = null;
@@ -588,7 +588,7 @@ function confirm(title,callback){
     dialog.querySelector('.title').innerHTML = '';
     dialog.style.display='none';
     dialog.style.top = '0px';
-    document.querySelector('.sidebar').style.opacity = 1; 
+    document.querySelector('.sidebar').style.opacity = 1;
   }
   dialog.querySelector('.yes').onclick = function(){
     cleanup(true);
@@ -602,7 +602,7 @@ function confirm(title,callback){
   setTimeout(function(){
     document.querySelector('.sidebar').onclick = function(){
       cleanup(false);
-    } 
+    }
   },100)
 }
 function myAlert(title,callback){
@@ -621,7 +621,7 @@ function myAlert(title,callback){
     dialog.querySelector('.title').innerHTML = '';
     dialog.style.display='none';
     dialog.style.top = '0px';
-    document.querySelector('.sidebar').style.opacity = 1; 
+    document.querySelector('.sidebar').style.opacity = 1;
   }
   dialog.querySelector('.cancel').style.display = 'none'
   dialog.querySelector('.yes').innerHTML = 'OK'
@@ -634,7 +634,7 @@ function myAlert(title,callback){
   setTimeout(function(){
     document.querySelector('.sidebar').onclick = function(){
       cleanup(false);
-    } 
+    }
   },100)
 }
 /* insert date time */
@@ -645,7 +645,7 @@ function insertDateTimeSelect(){
   var d = baseTime;
   var ts = strftime(fmt,d,serverValues.locale);
   loading(true)
-  google.script.run.withSuccessHandler(stopLoading).withFailureHandler(stopLoading).insertAtCursor(ts);  
+  google.script.run.withSuccessHandler(stopLoading).withFailureHandler(stopLoading).insertAtCursor(ts);
   //ele.selectedIndex = -1;
 }
 
@@ -655,7 +655,7 @@ function thousandCommasSelected(){
   loading(true)
   var x = parseInt('1000').toLocaleString()
   var sp = x.length>4 ? x.substr(1,1) : ',' ;//safari don't support toLocaleString
-  google.script.run.withSuccessHandler(stopLoading).withFailureHandler(stopLoading).thousandCommasSelected(sp);  
+  google.script.run.withSuccessHandler(stopLoading).withFailureHandler(stopLoading).thousandCommasSelected(sp);
 }
 
 function refreshZeropadBtn(){
@@ -668,18 +668,18 @@ function zeropadSelected(){
   var ele = document.getElementById('zeropadsize');
   var s = parseInt(ele.value);
   loading(true)
-  google.script.run.withSuccessHandler(stopLoading).withFailureHandler(stopLoading).zeropadSelected(s);  
+  google.script.run.withSuccessHandler(stopLoading).withFailureHandler(stopLoading).zeropadSelected(s);
 }
 /* tel number */
 function dashSeperateSelected(size){
   loading(true)
-  google.script.run.withSuccessHandler(stopLoading).withFailureHandler(stopLoading).dashSeperateSelected(size);  
+  google.script.run.withSuccessHandler(stopLoading).withFailureHandler(stopLoading).dashSeperateSelected(size);
 }
 /* text convertion */
 function fullhalfConvertSelected(toHalf){
   var flag = 1+2+4;
   loading(true)
-  google.script.run.withSuccessHandler(stopLoading).withFailureHandler(stopLoading).fullhalfConvertSelected(toHalf,flag);  
+  google.script.run.withSuccessHandler(stopLoading).withFailureHandler(stopLoading).fullhalfConvertSelected(toHalf,flag);
 }
 function puncFullhalfConvertSelected(toHalf){
   var eles = document.querySelectorAll('input.puncfullhalftype')
@@ -688,11 +688,11 @@ function puncFullhalfConvertSelected(toHalf){
       if (eles[i].checked) flag+= parseInt(eles[i].getAttribute('data'));
   }
   loading(true)
-  google.script.run.withSuccessHandler(stopLoading).withFailureHandler(stopLoading).puncFullhalfConvertSelected(toHalf,flag);  
+  google.script.run.withSuccessHandler(stopLoading).withFailureHandler(stopLoading).puncFullhalfConvertSelected(toHalf,flag);
 }
 function caseConvertSelected(flag){
   loading(true)
-  google.script.run.withSuccessHandler(stopLoading).withFailureHandler(stopLoading).caseConvertSelected(flag);  
+  google.script.run.withSuccessHandler(stopLoading).withFailureHandler(stopLoading).caseConvertSelected(flag);
 }
 /* flat-btn related */
 function enableFlatBtn(){
@@ -706,7 +706,7 @@ function enableFlatBtn(){
   document.querySelector('#pip.flat-btn-box').innerHTML=tags.join('');
   var chars = ['◯','☓','━','-','┈','░','♡','☆']
   tags = []
-  for (var i in chars){    
+  for (var i in chars){
     tags.push('<div class="flat-btn" char="'+chars[i]+'">'+chars[i]+'</div>')
   }
   document.querySelector('#fwc.flat-btn-box').innerHTML=tags.join('');
@@ -725,7 +725,7 @@ function enableFlatBtn(){
      bz.style.display = 'inline-block';
      var rect = getOffset(evt.target);
      bz.style.left = rect.left+'px';
-     bz.style.top = (rect.top+30)+'px'     
+     bz.style.top = (rect.top+30)+'px'
   }
   var onclick = function(evt){
     var pair = evt.target.getAttribute('pair')
@@ -812,7 +812,7 @@ function getOffset( el ) {
     return { top: _y, left: _x };
 }
 function showHelp(helpname,helpCloseByBtn,helpType){
-  
+
   /* simply deal with hover help */
   if (helpType=='hover'){
       var helppos = document.querySelector('.helppos[helpname="'+helpname+'"]');
@@ -860,22 +860,22 @@ function showHelp(helpname,helpCloseByBtn,helpType){
       },1)
     return;
   }
-  
+
   /* need to check again for some help is triggered manually */
   if (document.querySelector('.helpframe[helpname="'+helpname+'"]')) return;//already opened
   /* one help only, unless the existing help is a modal help */
   closeHelp()
-  // create a new helpframe  
+  // create a new helpframe
   /* prepare for animation */
-  // clone the masterhelpframe  
+  // clone the masterhelpframe
   var helpframe = document.querySelector('.masterhelpframe.helpframe').cloneNode(true);
   helpframe.className = 'helpframe';
-  
+
   helpframe.style.display = 'block';
   helpframe.setAttribute('helpname',helpname)
-  var trigger = function(){    
+  var trigger = function(){
     //var helpframe = document.querySelector('.helpframe[helpname="'+helpname+'"]');
-    helpname = this._helpname; 
+    helpname = this._helpname;
     if (helpCloseByBtn) helpframe.setAttribute('modal',1)
     helpframe.querySelector('.closebtn').setAttribute('helpname',helpname)
     var cele = helpframe.querySelector('.helpcontent')
@@ -891,15 +891,15 @@ function showHelp(helpname,helpCloseByBtn,helpType){
     /* make the helpframe visible, delay to wait the DOM been refreshed */
     setTimeout(function(){
       // scroll to make it visible
-      var y = getOffset( helpframe ).top; 
+      var y = getOffset( helpframe ).top;
       var offset = y-window.scrollY;
-      if (offset<0 || offset > window.innerHeight)  window.scrollTo(0,Math.max(0,y-50));      
-      
+      if (offset<0 || offset > window.innerHeight)  window.scrollTo(0,Math.max(0,y-50));
+
       //trigger event
       var e = document.createEvent('Event');
       e.initEvent('help-open-'+helpname,false,true);
       document.dispatchEvent(e);
-      
+
     },100);
   }
   setTimeout(function(){trigger.apply({_helpname:helpname})},1)
@@ -919,7 +919,7 @@ function closeHoverHelp(){
 function closeHelp(btn){
   /* release the body click */
   document.body.onclick = null;
-  
+
   var helpname = null,helpframe=null;
   if (btn) {
     helpname = btn.getAttribute('helpname');
@@ -932,7 +932,7 @@ function closeHelp(btn){
   }
   else {
     helpframe = document.querySelector('.helpframe[helpname]');
-    if (!helpframe) return true;//no helpframe is showing    
+    if (!helpframe) return true;//no helpframe is showing
     helpname = helpframe.getAttribute('helpname');
   }
   if (helpframe.getAttribute('modal')) return false
@@ -940,7 +940,7 @@ function closeHelp(btn){
   if (cele.firstChild != null){
     /*cele.removeChild(cele.firstChild);*/
     //move back to helps
-    document.getElementById('helps').appendChild(cele.firstChild);    
+    document.getElementById('helps').appendChild(cele.firstChild);
   }
   helpframe.style.display = 'none';
   helpframe.parentNode.removeChild(helpframe);
@@ -1010,7 +1010,7 @@ document.getElementById('insdt1st').onclick = function(evt){
   if (selectedIndex==0) return
   var oldFormat = formats[0]
   var newFormat = formats[selectedIndex];
-  
+
   formats.splice(selectedIndex,1,oldFormat);
   formats.splice(0,1,newFormat);
   selectedFmt = 0;
@@ -1023,7 +1023,7 @@ document.getElementById('insdt1st').onclick = function(evt){
   saveFormats();
   //miso
   myAlert(localI18n('Done'),function(){})
-  
+
 }
 /* changed on date-time formats selector*/
 function updateDateFormatSelector(selEle){
@@ -1056,14 +1056,14 @@ function updateDateFormatSelector(selEle){
     // click on existing items
     var insdt = document.getElementById('insdt')
     var fmt =editingFormats[selEle.selectedIndex];
-    insdt.selectedIndex = selEle.selectedIndex;  
+    insdt.selectedIndex = selEle.selectedIndex;
     selectedFmt = selEle.selectedIndex;
 
     var dtfmtinput = document.getElementById('dtfmtinput');
     dtfmtinput.value = fmt;
     dtfmtinput.setAttribute('placeholder',localI18n('Input format here'))
     dtfmtinput.focus();
-  
+
     if (formats.length>1){
       //allow to remove or move item
       document.getElementById('optdel').removeAttribute('disabled');
@@ -1113,7 +1113,7 @@ function switchSelectOption(selEle,i,j){
   copyOption( ori, selEle.options[j]);
 }
 function handleDFOption(action){
-  var selEle = document.getElementById('insdtedit');  
+  var selEle = document.getElementById('insdtedit');
   var insdt = document.getElementById('insdt');
   switch(action){
     case -1:
@@ -1134,7 +1134,7 @@ function handleDFOption(action){
         }
       }
       break;
-    case 0: 
+    case 0:
       // delete optoin; keep 1 option at least
       if (formats.length > 1){
         confirm(localI18n('Delete this item')+'?',function(yes){
@@ -1146,11 +1146,11 @@ function handleDFOption(action){
               formats.splice(selectedFmt,1);
               selEle.removeChild(selEle.options[selectedFmt])
               var sel = document.getElementById('insdt')
-              sel.removeChild(sel.options[selectedFmt])      
+              sel.removeChild(sel.options[selectedFmt])
               selectedFmt = 0
-              
+
               document.getElementById('dtfmtinput').value = formats[0];
-              saveFormats();            
+              saveFormats();
           }
         })
       }
@@ -1181,7 +1181,7 @@ function handleDFOption(action){
         else{
           opt2.setAttribute('lock',1);//lock for dynamicValue
         }
-      }   
+      }
   }
 }
 function resetUserProperty(){
@@ -1204,7 +1204,7 @@ function updateBaseTime(stop){
     _updateBaseTimer = 0;
     return;
   }
-  var d = getNewDate();  
+  var d = getNewDate();
   if (editingFormatsType=='menu'){
     var sel = document.getElementById('insdtedit');
     if (sel.selectedIndex != -1 ) baseTimeOffset = Math.floor(sel.selectedIndex/2) - 1 ;//-1,0,1
@@ -1216,7 +1216,7 @@ function updateBaseTime(stop){
   dynamicValue();
   _updateBaseTimer = setTimeout(function(){
     updateBaseTime()
-  },1000)  
+  },1000)
 }
 /* end of date format management */
 /* text options */
@@ -1234,7 +1234,7 @@ function renderTextOptions(textOptions,idx){
   if (textOptions){
     //1st time been called
     _textOptions = textOptions;
-    
+
     // if no groups, disable this feature
     if (textOptions.length==0){
       document.getElementById('textoptions-allgroup').style.display = 'none'
@@ -1242,11 +1242,11 @@ function renderTextOptions(textOptions,idx){
       document.getElementById('textoptions-buttons').style.display = 'none'
       return;
     }
-    
+
     idx = 0;
     tags = ['<select>']
     for (var i in textOptions){
-      var optgroup = textOptions[i] 
+      var optgroup = textOptions[i]
       //skip this group if there is no items
       if (optgroup.options.length==0) continue;
       tags.push('<option value="'+i+'"'+(i==0 ? ' selected' : '')+'>'+escapeHtml(optgroup.title)+'</option>')
@@ -1272,7 +1272,7 @@ function insertTextOption(){
   var el = document.querySelector('#textoptions-group select')
   var text = decodeURIComponent(el.options[el.selectedIndex].value)
   loading(true)
-  google.script.run.withSuccessHandler(stopLoading).withFailureHandler(stopLoading).insertAtCursor(text);  
+  google.script.run.withSuccessHandler(stopLoading).withFailureHandler(stopLoading).insertAtCursor(text);
 }
 function openTextOptionsFile(){
   open(serverValues.textOptions.url)
@@ -1329,8 +1329,8 @@ function geti18nDictionay(){
       //loading(false);
       translate(eles,dics);
       /* render options of formats */
-      renderDateFormatOptions(document.getElementById('insdt')) 
-      renderDateFormatOptions(document.getElementById('insdtedit'),true)      
+      renderDateFormatOptions(document.getElementById('insdt'))
+      renderDateFormatOptions(document.getElementById('insdtedit'),true)
       dynamicValue();
   }
   var onError = function (e){
@@ -1346,7 +1346,7 @@ function dynamicValue(){
   //collect fields
   var eles = document.querySelectorAll('.dynamic-value')
   var eles_hover = document.querySelectorAll('select:hover .dynamic-value')
-  
+
   var values = []
   for (var i=0,l=eles.length;i<l;i++){
     if (eles[i].getAttribute('lock')) continue;//skip the editing one
@@ -1364,7 +1364,7 @@ function dynamicValue(){
       if (ele===eh) {ishover=true;break}
     }
     if (ishover) continue
-    
+
     switch(name){
       case 'DATETIME':
         var format = data;
@@ -1383,13 +1383,13 @@ function changeTZ(){
 function getServerValues(){
   loading('Loading...')
   var onSuccess = function(rets){
-      loading(false);  
+      loading(false);
       if (rets.err){
         myAlert(rets.err,function(){});
         return;
       }
       serverValues = rets;
-      
+
       /* translate into mutable arrays */
       formats = []
       for (var i=0,l=rets.properties.formats.length;i<l;i++){
@@ -1403,26 +1403,26 @@ function getServerValues(){
       /* assigns to locale for calculate strftime */
       if (rets['locale']=='en'){
         /* render options of formats */
-        renderDateFormatOptions(document.getElementById('insdt')) 
-        renderDateFormatOptions(document.getElementById('insdtedit'),true)      
+        renderDateFormatOptions(document.getElementById('insdt'))
+        renderDateFormatOptions(document.getElementById('insdtedit'),true)
         dynamicValue();
       }
-      else{       
+      else{
         locale[rets.locale] = rets.localedata;
         geti18nDictionay()
-      } 
-      
+      }
+
       var tzoffset = (rets.tzoffset===null) ? ( new Date().getTimezoneOffset() ) : parseFloat(rets.tzoffset)
       //convert this value to effective value
       serverValues.tzoffset = tzoffset
-      
+
       var tzinfo = 'GMT' + (tzoffset <= 0 ? '＋' : '─') + (Math.abs(tzoffset)/60)
       document.getElementById('tzinfo').innerHTML = tzinfo
-      
-      
+
+
       /*
-       * temporaryly disabled for not been tested feature 
-      
+       * temporaryly disabled for not been tested feature
+
       if (rets.textOptions){
         if (rets.textOptions.options){
           renderTextOptions(rets.textOptions.options)
@@ -1443,11 +1443,11 @@ function getServerValues(){
       */
 
   }
-  /* 
+  /*
   2017-12-28, disabled to honor server-side's setting
     var tzoffset = new Date().getTimezoneOffset()
   */
-  google.script.run.withSuccessHandler(onSuccess).withFailureHandler(stopLoading).getServerValues();  
+  google.script.run.withSuccessHandler(onSuccess).withFailureHandler(stopLoading).getServerValues();
 }
 function getNewDate(y,m,d){
   /* optional arguments
@@ -1462,11 +1462,11 @@ function getNewDate(y,m,d){
   return d;
 }
 function initialization(){
-    getServerValues();//also calls dynamicValue() 
+    getServerValues();//also calls dynamicValue()
     enableHelp();
     enableFlatBtn();
     //triggers for auto update preview
-    
+
     var dtfmtinput = document.getElementById('dtfmtinput');
     dtfmtinput.onblur=function(){
       //check if we need to cancel the "add new format"
@@ -1505,19 +1505,19 @@ function initialization(){
         }
       }
       else{
-        // new format item not been clicked, do nothing        
+        // new format item not been clicked, do nothing
       }
     }
-    dtfmtinput.onkeyup=function(){      
+    dtfmtinput.onkeyup=function(){
       handleDFOption(4)
     }
-    
+
     // auto update the baseTime (it calls dynamicValue() too)
     updateBaseTime();
-    
+
     // auto toggle to normal menu
     document.addEventListener('help-open-eo',function(e){
-      //document.getElementById('seld').style.display='none';          
+      //document.getElementById('seld').style.display='none';
       document.getElementById('insbtn').setAttribute('disabled',true);
       //hide edit formats button
       var btn = document.getElementById('insdteditbtn')
@@ -1526,12 +1526,12 @@ function initialization(){
       //show close editing button
       var btn = document.getElementById('insdteditbtncls')
       btn.style.display = ''
-      btn.blur()      
-    })    
+      btn.blur()
+    })
     document.addEventListener('help-close-eo',function(e){
       //toggleHelp(document.getElementById('sytbtn'),true,true)//enforce it to be closed
       document.getElementById('insbtn').removeAttribute('disabled');
-      //document.getElementById('dtfmtinput').value='' 
+      //document.getElementById('dtfmtinput').value=''
       if (editingFormatsType=='menu') toggleEditingFormats()
       var btn = document.getElementById('insdteditbtn')
       btn.style.display = ''
@@ -1554,7 +1554,7 @@ function initialization(){
     document.addEventListener('help-close-ftsy',function(e){
       document.getElementById('sytbtn').innerText = localI18n('Show Syntax')
     })
-    
+
     /*
     //test key press
     document.body.onkeydown = function(evt){
@@ -1621,7 +1621,7 @@ function getHebrew(d,key,callback){
   //https://www.hebcal.com/home/219/hebrew-date-converter-rest-api
   var url = 'https://www.hebcal.com/converter/?cfg=json&gy='+d.getFullYear()+'&gm='+(1+d.getMonth())+'&gd='+d.getDate()+'&g2h=1'
   getUrlContent(url,function(content){
-    try{  
+    try{
       var obj = JSON.parse(content)
       hebrew_date_cache[key] = obj
     }
@@ -1632,44 +1632,44 @@ function getHebrew(d,key,callback){
 }
 
 function LunarCalendar(){
-    this.lunarInfo=new Array(  
-        0x04bd8,0x04ae0,0x0a570,0x054d5,0x0d260,0x0d950,0x16554,0x056a0,0x09ad0,0x055d2,  
-        0x04ae0,0x0a5b6,0x0a4d0,0x0d250,0x1d255,0x0b540,0x0d6a0,0x0ada2,0x095b0,0x14977,  
-        0x04970,0x0a4b0,0x0b4b5,0x06a50,0x06d40,0x1ab54,0x02b60,0x09570,0x052f2,0x04970,  
-        0x06566,0x0d4a0,0x0ea50,0x06e95,0x05ad0,0x02b60,0x186e3,0x092e0,0x1c8d7,0x0c950,  
-        0x0d4a0,0x1d8a6,0x0b550,0x056a0,0x1a5b4,0x025d0,0x092d0,0x0d2b2,0x0a950,0x0b557,  
-        0x06ca0,0x0b550,0x15355,0x04da0,0x0a5b0,0x14573,0x052b0,0x0a9a8,0x0e950,0x06aa0,  
-        0x0aea6,0x0ab50,0x04b60,0x0aae4,0x0a570,0x05260,0x0f263,0x0d950,0x05b57,0x056a0,  
-        0x096d0,0x04dd5,0x04ad0,0x0a4d0,0x0d4d4,0x0d250,0x0d558,0x0b540,0x0b6a0,0x195a6,  
-        0x095b0,0x049b0,0x0a974,0x0a4b0,0x0b27a,0x06a50,0x06d40,0x0af46,0x0ab60,0x09570,  
-        0x04af5,0x04970,0x064b0,0x074a3,0x0ea50,0x06b58,0x055c0,0x0ab60,0x096d5,0x092e0,  
-        0x0c960,0x0d954,0x0d4a0,0x0da50,0x07552,0x056a0,0x0abb7,0x025d0,0x092d0,0x0cab5,  
-        0x0a950,0x0b4a0,0x0baa4,0x0ad50,0x055d9,0x04ba0,0x0a5b0,0x15176,0x052b0,0x0a930,  
-        0x07954,0x06aa0,0x0ad50,0x05b52,0x04b60,0x0a6e6,0x0a4e0,0x0d260,0x0ea65,0x0d530,  
-        0x05aa0,0x076a3,0x096d0,0x04bd7,0x04ad0,0x0a4d0,0x1d0b6,0x0d250,0x0d520,0x0dd45,  
-        0x0b5a0,0x056d0,0x055b2,0x049b0,0x0a577,0x0a4b0,0x0aa50,0x1b255,0x06d20,0x0ada0,  
-        0x14b63); 
-        
-    this.Gan=new Array("甲","乙","丙","丁","戊","己","庚","辛","壬","癸");  
-    this.Zhi=new Array("子","丑","寅","卯","辰","巳","午","未","申","酉","戌","亥");  
-    this.nStr1 = new Array('','一','二','三','四','五','六','七','八','九','十');  
+    this.lunarInfo=new Array(
+        0x04bd8,0x04ae0,0x0a570,0x054d5,0x0d260,0x0d950,0x16554,0x056a0,0x09ad0,0x055d2,
+        0x04ae0,0x0a5b6,0x0a4d0,0x0d250,0x1d255,0x0b540,0x0d6a0,0x0ada2,0x095b0,0x14977,
+        0x04970,0x0a4b0,0x0b4b5,0x06a50,0x06d40,0x1ab54,0x02b60,0x09570,0x052f2,0x04970,
+        0x06566,0x0d4a0,0x0ea50,0x06e95,0x05ad0,0x02b60,0x186e3,0x092e0,0x1c8d7,0x0c950,
+        0x0d4a0,0x1d8a6,0x0b550,0x056a0,0x1a5b4,0x025d0,0x092d0,0x0d2b2,0x0a950,0x0b557,
+        0x06ca0,0x0b550,0x15355,0x04da0,0x0a5b0,0x14573,0x052b0,0x0a9a8,0x0e950,0x06aa0,
+        0x0aea6,0x0ab50,0x04b60,0x0aae4,0x0a570,0x05260,0x0f263,0x0d950,0x05b57,0x056a0,
+        0x096d0,0x04dd5,0x04ad0,0x0a4d0,0x0d4d4,0x0d250,0x0d558,0x0b540,0x0b6a0,0x195a6,
+        0x095b0,0x049b0,0x0a974,0x0a4b0,0x0b27a,0x06a50,0x06d40,0x0af46,0x0ab60,0x09570,
+        0x04af5,0x04970,0x064b0,0x074a3,0x0ea50,0x06b58,0x055c0,0x0ab60,0x096d5,0x092e0,
+        0x0c960,0x0d954,0x0d4a0,0x0da50,0x07552,0x056a0,0x0abb7,0x025d0,0x092d0,0x0cab5,
+        0x0a950,0x0b4a0,0x0baa4,0x0ad50,0x055d9,0x04ba0,0x0a5b0,0x15176,0x052b0,0x0a930,
+        0x07954,0x06aa0,0x0ad50,0x05b52,0x04b60,0x0a6e6,0x0a4e0,0x0d260,0x0ea65,0x0d530,
+        0x05aa0,0x076a3,0x096d0,0x04bd7,0x04ad0,0x0a4d0,0x1d0b6,0x0d250,0x0d520,0x0dd45,
+        0x0b5a0,0x056d0,0x055b2,0x049b0,0x0a577,0x0a4b0,0x0aa50,0x1b255,0x06d20,0x0ada0,
+        0x14b63);
+
+    this.Gan=new Array("甲","乙","丙","丁","戊","己","庚","辛","壬","癸");
+    this.Zhi=new Array("子","丑","寅","卯","辰","巳","午","未","申","酉","戌","亥");
+    this.nStr1 = new Array('','一','二','三','四','五','六','七','八','九','十');
     this.nStr2 = new Array('初','十','廿','卅','□');
 }
 LunarCalendar.prototype = {
-    lYearDays : function(y) {  
-        var i, sum = 348;  
-        for(i=0x8000; i>0x8; i>>=1) sum += (this.lunarInfo[y-1900] & i)? 1: 0;  
-        return(sum+this.leapDays(y));  
+    lYearDays : function(y) {
+        var i, sum = 348;
+        for(i=0x8000; i>0x8; i>>=1) sum += (this.lunarInfo[y-1900] & i)? 1: 0;
+        return(sum+this.leapDays(y));
     },
-    leapDays : function(y) {  
-        if(this.leapMonth(y))  return((this.lunarInfo[y-1900] & 0x10000)? 30: 29);  
-        else return(0);  
+    leapDays : function(y) {
+        if(this.leapMonth(y))  return((this.lunarInfo[y-1900] & 0x10000)? 30: 29);
+        else return(0);
     },
-    leapMonth : function(y) {  
-        return(this.lunarInfo[y-1900] & 0xf);  
+    leapMonth : function(y) {
+        return(this.lunarInfo[y-1900] & 0xf);
     },
-    monthDays : function (y,m) {  
-        return( (this.lunarInfo[y-1900] & (0x10000>>m))? 30: 29 );  
+    monthDays : function (y,m) {
+        return( (this.lunarInfo[y-1900] & (0x10000>>m))? 30: 29 );
     },
     md2Str:function(n,month){
       var n1 = Math.floor(n/10)
@@ -1677,51 +1677,51 @@ LunarCalendar.prototype = {
       if (month) return (n1==0 ? '' : this.nStr2[n1])+(n0==0 ? '' : this.nStr1[n0])
       else return (this.nStr2[n1])+(n0==0 ? '' : this.nStr1[n0])
     },
-    toLunar: function (objDate) {  
+    toLunar: function (objDate) {
 
         var lunarDate = {}
-      
-        var i, leap=0, temp=0;  
-        var offset   = (Date.UTC(objDate.getFullYear(),objDate.getMonth(),objDate.getDate()) - Date.UTC(1900,0,31))/86400000;  
-  
-        for(i=1900; i<2050 && offset>0; i++) { temp=this.lYearDays(i); offset-=temp; }  
-  
-        if(offset<0) { offset+=temp; i--; }  
-  
-        lunarDate.year = i;  
-  
-        leap = this.leapMonth(i); //闰哪个月  
-        lunarDate.isLeap = false;  
-  
-        for(i=1; i<13 && offset>0; i++) {  
-            //闰月  
-            if(leap>0 && i==(leap+1) && lunarDate.isLeap==false)  
-                { --i; lunarDate.isLeap = true; temp = this.leapDays(lunarDate.year); }  
-            else  
-                { temp = this.monthDays(lunarDate.year, i); }  
-  
-            //解除闰月  
-            if(lunarDate.isLeap==true && i==(leap+1)) lunarDate.isLeap = false;  
-  
-            offset -= temp;  
-        }  
-  
-        if(offset==0 && leap>0 && i==leap+1)  
-        if(lunarDate.isLeap)  
-            { tlunarDatehis.isLeap = false; }  
-        else  
-            { lunarDate.isLeap = true; --i; }  
-  
-        if(offset<0){ offset += temp; --i; }  
-  
+
+        var i, leap=0, temp=0;
+        var offset   = (Date.UTC(objDate.getFullYear(),objDate.getMonth(),objDate.getDate()) - Date.UTC(1900,0,31))/86400000;
+
+        for(i=1900; i<2050 && offset>0; i++) { temp=this.lYearDays(i); offset-=temp; }
+
+        if(offset<0) { offset+=temp; i--; }
+
+        lunarDate.year = i;
+
+        leap = this.leapMonth(i); //闰哪个月
+        lunarDate.isLeap = false;
+
+        for(i=1; i<13 && offset>0; i++) {
+            //闰月
+            if(leap>0 && i==(leap+1) && lunarDate.isLeap==false)
+                { --i; lunarDate.isLeap = true; temp = this.leapDays(lunarDate.year); }
+            else
+                { temp = this.monthDays(lunarDate.year, i); }
+
+            //解除闰月
+            if(lunarDate.isLeap==true && i==(leap+1)) lunarDate.isLeap = false;
+
+            offset -= temp;
+        }
+
+        if(offset==0 && leap>0 && i==leap+1)
+        if(lunarDate.isLeap)
+            { tlunarDatehis.isLeap = false; }
+        else
+            { lunarDate.isLeap = true; --i; }
+
+        if(offset<0){ offset += temp; --i; }
+
         lunarDate.year = this.cyclical(lunarDate.year)
         lunarDate.month = this.md2Str(i,true)
         lunarDate.day = this.md2Str(offset + 1);
         return lunarDate
     },
-    cyclical:function(year) {  
+    cyclical:function(year) {
         var num = year - 1900 + 36
-        return(this.Gan[num%10]+this.Zhi[num%12]);  
+        return(this.Gan[num%10]+this.Zhi[num%12]);
     }
 }
 
@@ -1784,7 +1784,7 @@ function tzOffset(offset){
 
 function strftime(format, date,loc) {
     date = date || getNewDate();
-    var locfmtpat = /\%[abAB]/; 
+    var locfmtpat = /\%[abAB]/;
     if (locfmtpat.test(format) && !locale[loc]){
       initializeUserLocale();
     }
@@ -1815,11 +1815,11 @@ function strftime(format, date,loc) {
 //        X: date.toLocaleTimeString(),
         y: ('' + date.getFullYear()).substr(2, 4),
         Y: '' + date.getFullYear(),
-//        Z: tzOffset(date.getTimezoneOffset()), 
+//        Z: tzOffset(date.getTimezoneOffset()),
         Z: tzOffset(serverValues['tzoffset']),
         '%' : '%',
     };
-    var result = '', i = 0, len=format.length;    
+    var result = '', i = 0, len=format.length;
     var hd = {hy:0,hm:'?',hd:'?',events:[],hebrew:'-'}
     var lu = {year:0,month:'',day:''}
     while (i < format.length) {
@@ -1853,7 +1853,7 @@ function strftime(format, date,loc) {
                   break
               default:
                   result = result + format[i]+format[i + 1]+format[i + 2]+format[i + 3]
-            }            
+            }
             i += 3;
         }
         else if (format[i] === '%' && (i+3<len) && (format[i+1]=='L') && (format[i+2]=='u')) {
@@ -1879,16 +1879,16 @@ function strftime(format, date,loc) {
                   break
               default:
                   result = result + format[i]+format[i + 1]+format[i + 2]+format[i + 3]
-            }            
+            }
             i += 3;
         }
-        else if (format[i] === '%' && (i+3<len) && (format[i+1]=='e') && (format[i+2]=='n') && (format[i+3]=='b'||format[i+3]=='B')) {        
+        else if (format[i] === '%' && (i+3<len) && (format[i+1]=='e') && (format[i+2]=='n') && (format[i+3]=='b'||format[i+3]=='B')) {
           // %enB, %enB
             result = result + (format[i+3]=='b' ? locale.en.monthsshort[date.getMonth()] : locale.en.months[date.getMonth()])
-            i += 3;          
-        }        
+            i += 3;
+        }
         else if ((format[i] == '%') && (i+2<len) && (format[i+1]=='*')) {
-            // %*d, %*H, %*S, 
+            // %*d, %*H, %*S,
             result = result + parseInt(fields[format[i + 2]]);
             i += 2;
         }
