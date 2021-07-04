@@ -1,3 +1,7 @@
+/**
+ * @OnlyCurrentDoc
+ */
+
 //debug
 //var s= new Date().getTime();Logger.log(s+' started');
 
