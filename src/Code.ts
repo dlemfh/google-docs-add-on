@@ -8,16 +8,16 @@
 function my_parseInt(s) {
   // correct convert 08,09 to 8 and 9
   //bug of google: https://issuetracker.google.com/issues/36759856
-  return typeof s == "string"
-    ? s.indexOf(".") > 0
+  return typeof s == 'string'
+    ? s.indexOf('.') > 0
       ? parseFloat(s)
-      : parseInt(s.replace(/^0+/, ""))
+      : parseInt(s.replace(/^0+/, ''))
     : s;
 }
 
 /* en, zh_TW, ja_JP,ko_KR, */
 var userlocale = Session.getActiveUserLocale();
-if (userlocale.indexOf("en_") == 0) userlocale = "en";
+if (userlocale.indexOf('en_') == 0) userlocale = 'en';
 
 var _userProperties; //singleton
 function getUserProperty() {
@@ -38,25 +38,25 @@ function onInstall(e) {
 function onOpen(e) {
   DocumentApp.getUi()
     .createAddonMenu()
-    .addItem("Yesterday's date", "insertYesterday")
-    .addItem("Today's date", "insertNow")
-    .addItem("Tomorrow's date", "insertTomorrow")
+    .addItem("Yesterday's date", 'insertYesterday')
+    .addItem("Today's date", 'insertNow')
+    .addItem("Tomorrow's date", 'insertTomorrow')
     .addSeparator()
-    .addItem("Calendar", "showCalendar")
+    .addItem('Calendar', 'showCalendar')
     .addSeparator()
-    .addItem("Set Time Zone", "setupTZ")
-    .addItem("View more options", "showSidebar")
+    .addItem('Set Time Zone', 'setupTZ')
+    .addItem('View more options', 'showSidebar')
     .addToUi();
 }
 
 function showCalendar() {
   DocumentApp.getUi().showModelessDialog(
-    HtmlService.createHtmlOutputFromFile("calendar.html")
+    HtmlService.createHtmlOutputFromFile('calendar.html')
       .setSandboxMode(HtmlService.SandboxMode.IFRAME)
-      .setTitle("Calendar")
+      .setTitle('Calendar')
       .setHeight(315)
       .setWidth(270),
-    "Calendar"
+    'Calendar'
   );
 }
 
@@ -74,29 +74,29 @@ function getTextsFile(){
 */
 
 function setupTZ() {
-  var htmlOutput = HtmlService.createHtmlOutputFromFile("splash.html")
+  var htmlOutput = HtmlService.createHtmlOutputFromFile('splash.html')
     .setSandboxMode(HtmlService.SandboxMode.IFRAME)
     .setWidth(300)
     .setHeight(100);
-  DocumentApp.getUi().showModelessDialog(htmlOutput, "set Time Zone to");
+  DocumentApp.getUi().showModelessDialog(htmlOutput, 'set Time Zone to');
 }
 /* workaround for async issue */
 
 function getDefaultFormats() {
   //keep it five
   return [
-    "%Y/%m/%d %H:%M",
-    "%Y/%m/%d (%A)",
-    "%Y/%m/%d %H:%M:%S",
-    "%Y/%m/%d %p%h:%M",
-    "%b %d, %Y",
+    '%Y/%m/%d %H:%M',
+    '%Y/%m/%d (%A)',
+    '%Y/%m/%d %H:%M:%S',
+    '%Y/%m/%d %p%h:%M',
+    '%b %d, %Y',
   ];
 }
 function getProperties() {
   //var userProperties = PropertiesService.getUserProperties();
   var formats;
-  var fmts = getUserProperty().getProperty("formats");
-  if (fmts) formats = fmts.split("\t");
+  var fmts = getUserProperty().getProperty('formats');
+  if (fmts) formats = fmts.split('\t');
   else formats = getDefaultFormats();
 
   return { formats: formats };
@@ -112,49 +112,49 @@ function deleteProperty(key) {
 var locale = {
   en: {
     days: [
-      "Sunday",
-      "Monday",
-      "Tuesday",
-      "Wednesday",
-      "Thursday",
-      "Friday",
-      "Saturday",
+      'Sunday',
+      'Monday',
+      'Tuesday',
+      'Wednesday',
+      'Thursday',
+      'Friday',
+      'Saturday',
     ],
-    daysshort: ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"],
+    daysshort: ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'],
     months: [
-      "January",
-      "February",
-      "March",
-      "April",
-      "May",
-      "June",
-      "July",
-      "August",
-      "September",
-      "October",
-      "November",
-      "December",
+      'January',
+      'February',
+      'March',
+      'April',
+      'May',
+      'June',
+      'July',
+      'August',
+      'September',
+      'October',
+      'November',
+      'December',
     ],
     monthsshort: [
-      "Jan",
-      "Feb",
-      "Mar",
-      "Apr",
-      "May",
-      "Jun",
-      "Jul",
-      "Aug",
-      "Sep",
-      "Oct",
-      "Nov",
-      "Dec",
+      'Jan',
+      'Feb',
+      'Mar',
+      'Apr',
+      'May',
+      'Jun',
+      'Jul',
+      'Aug',
+      'Sep',
+      'Oct',
+      'Nov',
+      'Dec',
     ],
   },
 };
 function initializeUserLocale() {
   var uprop = getUserProperty();
-  if (userlocale != "en") {
-    var currentLocale = uprop.getProperty("userlocale");
+  if (userlocale != 'en') {
+    var currentLocale = uprop.getProperty('userlocale');
     if (currentLocale == userlocale) {
       //do nothing
       //Logger.log('resue locale: '+userlocale)
@@ -162,10 +162,10 @@ function initializeUserLocale() {
       //locale changed, clear current cached properties
       //Logger.log('reset locale cache to '+userlocale+' from '+currentLocale+' @'+new Date())
       var objs = uprop.getProperties();
-      var prefix = "*" + userlocale;
+      var prefix = '*' + userlocale;
       var keeps = { userlocale: userlocale };
       for (var key in objs) {
-        if (key.substr(0, 1) != "*" || key.indexOf(prefix) == 0) {
+        if (key.substr(0, 1) != '*' || key.indexOf(prefix) == 0) {
           keeps[key] = objs[key];
         }
         //else Logger.log('remove property:'+key);
@@ -213,12 +213,12 @@ function initializeUserLocale() {
 
 /* manipulation the doc starts*/
 function getSelection(warnning) {
-  if (typeof warnning === "undefined") warnning = true;
+  if (typeof warnning === 'undefined') warnning = true;
   var selection = DocumentApp.getActiveDocument().getSelection();
   if (selection) {
     return selection;
   } else {
-    if (warnning) DocumentApp.getUi().alert("Please select text to format.");
+    if (warnning) DocumentApp.getUi().alert('Please select text to format.');
     return;
   }
 }
@@ -234,7 +234,7 @@ function replaceSelection(txt, fill) {
     for (var i = 0; i < len; i++) {
       cs.push(c);
     }
-    return cs.join("");
+    return cs.join('');
   };
   for (var i = 0; i < selectedElements.length; ++i) {
     var selectedElement = selectedElements[i];
@@ -255,7 +255,7 @@ function replaceSelection(txt, fill) {
             )
           : txt;
       } else {
-        txt2add = "";
+        txt2add = '';
       }
       var newt =
         t.substr(0, selectedElement.getStartOffset()) +
@@ -312,7 +312,7 @@ function insertAtCursor(txt) {
       }
       doc.setSelection(rangeBuilder.build());
     } else {
-      DocumentApp.getUi().alert("Cannot insert text at this cursor location.");
+      DocumentApp.getUi().alert('Cannot insert text at this cursor location.');
       return;
     }
   } else {
@@ -333,7 +333,7 @@ function insertAtCursor(txt) {
           if (i == selectedElements.length - 1) {
             txt2add = txt;
           } else {
-            txt2add = "";
+            txt2add = '';
           }
           var newt =
             t.substr(0, selectedElement.getStartOffset()) +
@@ -372,7 +372,7 @@ function insertAtCursor(txt) {
       doc.setSelection(rangeBuilder.build());
       return;
     }
-    DocumentApp.getUi().alert("Cannot find a cursor in the document.");
+    DocumentApp.getUi().alert('Cannot find a cursor in the document.');
   }
 }
 function selectionReplaceWith(char) {
@@ -473,7 +473,7 @@ function restoreTextStyle(text, style) {
 
 /* Date Time */
 function getNewDate() {
-  var tzoffset = getUserProperty().getProperty("tzoffset");
+  var tzoffset = getUserProperty().getProperty('tzoffset');
   tzoffset = tzoffset ? my_parseInt(tzoffset) : 0;
   var d = new Date();
   var offset = tzoffset - d.getTimezoneOffset();
@@ -482,10 +482,10 @@ function getNewDate() {
 }
 function insertFromMenu(d) {
   try {
-    var fmts = getUserProperty().getProperty("formats");
-    if (fmts) menuformats = fmts.split("\t");
+    var fmts = getUserProperty().getProperty('formats');
+    if (fmts) menuformats = fmts.split('\t');
     else menuformats = getDefaultFormats();
-    var fmt = menuformats.length ? menuformats[0] : "%Y/%m/%d %H:%M";
+    var fmt = menuformats.length ? menuformats[0] : '%Y/%m/%d %H:%M';
     insertAtCursor(strftime(fmt, d, userlocale));
   } catch (e) {
     Logger.log(e);
@@ -516,10 +516,10 @@ function thousandCommasSelected(sp) {
   applyToSelected(thousandCommas, true, [sp]);
 }
 function zerofill(n, size) {
-  n = "" + n;
+  n = '' + n;
   size = size || 3;
   while (n.length < size) {
-    n = "0" + n;
+    n = '0' + n;
   }
   return n;
 }
@@ -674,7 +674,7 @@ function fullhalfConvert(t, toHalf, typeflag) {
   }
   if (lastPos > 0) {
     pieces.push(t.substring(lastPos));
-    return pieces.join("");
+    return pieces.join('');
   } else {
     return t;
   }
@@ -688,144 +688,144 @@ function puncFullhalfConvert(t, toHalf, flag) {
   var src, dst;
   if (toHalf) {
     src = [
-      "\\‘",
-      "\\’",
-      "\\“",
-      "\\”",
-      "\\｛",
-      "\\｝",
-      "\\（",
-      "\\）",
-      "\\『",
-      "\\』",
-      "\\［",
-      "\\］",
-      "\\、",
-      "\\，",
-      "\\…",
-      "\\‥",
-      "\\。",
-      "\\｡",
-      "\\《",
-      "\\》",
-      "\\〈",
-      "\\〉",
-      "\\〜",
-      "\\：",
-      "\\！",
-      "\\？",
-      "\\—",
-      "\\－",
-      "\\—",
-      "\\；",
+      '\\‘',
+      '\\’',
+      '\\“',
+      '\\”',
+      '\\｛',
+      '\\｝',
+      '\\（',
+      '\\）',
+      '\\『',
+      '\\』',
+      '\\［',
+      '\\］',
+      '\\、',
+      '\\，',
+      '\\…',
+      '\\‥',
+      '\\。',
+      '\\｡',
+      '\\《',
+      '\\》',
+      '\\〈',
+      '\\〉',
+      '\\〜',
+      '\\：',
+      '\\！',
+      '\\？',
+      '\\—',
+      '\\－',
+      '\\—',
+      '\\；',
     ];
     dst = [
       "'",
       "'",
       '"',
       '"',
-      "{",
-      "}",
-      "(",
-      ")",
-      "[[",
-      "]]",
-      "[",
-      "]",
-      "､",
-      ",",
-      "...",
-      "..",
-      ".",
-      ".",
-      "<<",
-      ">>",
-      "<",
-      ">",
-      "~",
-      ":",
-      "!",
-      "?",
-      "-",
-      "-",
-      "-",
-      ";",
+      '{',
+      '}',
+      '(',
+      ')',
+      '[[',
+      ']]',
+      '[',
+      ']',
+      '､',
+      ',',
+      '...',
+      '..',
+      '.',
+      '.',
+      '<<',
+      '>>',
+      '<',
+      '>',
+      '~',
+      ':',
+      '!',
+      '?',
+      '-',
+      '-',
+      '-',
+      ';',
     ];
     if (cSpace) {
-      src.push("\\　");
-      dst.push(" ");
+      src.push('\\　');
+      dst.push(' ');
     }
   } else {
     src = [
       "\\'",
       '\\"',
-      "\\{",
-      "\\}",
-      "\\(",
-      "\\)",
-      "\\[\\[",
-      "\\]\\]",
-      "\\[",
-      "\\]",
-      "\\､",
-      "\\,",
-      "\\.\\.\\.",
-      "\\.\\.",
-      "\\.",
-      "\\<\\<",
-      "\\>\\>",
-      "\\<",
-      "\\>",
-      "\\~",
-      "\\:",
-      "\\!",
-      "\\?",
-      "\\-",
-      "\\;",
+      '\\{',
+      '\\}',
+      '\\(',
+      '\\)',
+      '\\[\\[',
+      '\\]\\]',
+      '\\[',
+      '\\]',
+      '\\､',
+      '\\,',
+      '\\.\\.\\.',
+      '\\.\\.',
+      '\\.',
+      '\\<\\<',
+      '\\>\\>',
+      '\\<',
+      '\\>',
+      '\\~',
+      '\\:',
+      '\\!',
+      '\\?',
+      '\\-',
+      '\\;',
     ];
     dst = [
-      "’",
-      "”",
-      "｛",
-      "｝",
-      "（",
-      "）",
-      "『",
-      "』",
-      "［",
-      "］",
-      "、",
-      "，",
-      "…",
-      "‥",
-      "。",
-      "《",
-      "》",
-      "〈",
-      "〉",
-      "〜",
-      "：",
-      "！",
-      "？",
-      "—",
-      "；",
+      '’',
+      '”',
+      '｛',
+      '｝',
+      '（',
+      '）',
+      '『',
+      '』',
+      '［',
+      '］',
+      '、',
+      '，',
+      '…',
+      '‥',
+      '。',
+      '《',
+      '》',
+      '〈',
+      '〉',
+      '〜',
+      '：',
+      '！',
+      '？',
+      '—',
+      '；',
     ];
     if (cSpace) {
-      src.push("\\ ");
-      dst.push("　");
+      src.push('\\ ');
+      dst.push('　');
     }
   }
   var il = src.length;
   var pat;
   for (var i = 0; i < il; i++) {
-    pat = new RegExp(src[i], "g");
+    pat = new RegExp(src[i], 'g');
     t = t.replace(pat, dst[i]);
   }
   return t;
 }
 function puncFullhalfConvertSelected(toHalf, flag) {
   //default to full-width exclude space
-  if (typeof toHalf === "undefined") {
+  if (typeof toHalf === 'undefined') {
     toHalf = false;
     flag = 0;
   }
@@ -847,7 +847,7 @@ function caseConvert(t, flag) {
   }
 }
 function caseConvertSelected(flag) {
-  if (typeof flag == "undefined") flag = 3;
+  if (typeof flag == 'undefined') flag = 3;
   applyToSelected(caseConvert, true, [flag]);
 }
 /* text options
@@ -858,41 +858,41 @@ function test_getTextsOptions(){
 
 /* dynamic values */
 function setTimezoneOffset(tzoffset) {
-  setProperty("tzoffset", tzoffset);
+  setProperty('tzoffset', tzoffset);
 }
 function getTimezoneOffset() {
-  return getUserProperty().getProperty("tzoffset");
+  return getUserProperty().getProperty('tzoffset');
 }
 function getServerValues() {
   try {
     //save tzoffset to user properge
     //setProperty('tzoffset',tzoffset)
     var tzoffset = getTimezoneOffset();
-    if (typeof tzoffset == "undefined") tzoffset = null;
+    if (typeof tzoffset == 'undefined') tzoffset = null;
 
     var user = Session.getActiveUser();
     var days = [
-      "Sunday",
-      "Monday",
-      "Tuesday",
-      "Wednesday",
-      "Thursday",
-      "Friday",
-      "Saturday",
+      'Sunday',
+      'Monday',
+      'Tuesday',
+      'Wednesday',
+      'Thursday',
+      'Friday',
+      'Saturday',
     ];
     var months = [
-      "January",
-      "February",
-      "March",
-      "April",
-      "May",
-      "June",
-      "July",
-      "August",
-      "September",
-      "October",
-      "November",
-      "December",
+      'January',
+      'February',
+      'March',
+      'April',
+      'May',
+      'June',
+      'July',
+      'August',
+      'September',
+      'October',
+      'November',
+      'December',
     ];
     var properties = getProperties();
 
@@ -909,7 +909,7 @@ function getServerValues() {
       tzoffset: tzoffset,
     };
 
-    if (userlocale == "en") {
+    if (userlocale == 'en') {
       //pass
     } else {
       //if (!locale[userlocale])
@@ -922,7 +922,7 @@ function getServerValues() {
       locale: userlocale,
       properties: { formats: [] },
       textOptions: false,
-      err: "" + e,
+      err: '' + e,
     };
   }
 }
@@ -934,13 +934,13 @@ function getHebrew(d, key, callback) {
   //https://www.hebcal.com/home/219/hebrew-date-converter-rest-api
   //var d = new Date()
   var url =
-    "http://www.hebcal.com/converter/?cfg=json&gy=" +
+    'http://www.hebcal.com/converter/?cfg=json&gy=' +
     d.getFullYear() +
-    "&gm=" +
+    '&gm=' +
     (1 + d.getMonth()) +
-    "&gd=" +
+    '&gd=' +
     d.getDate() +
-    "&g2h=1";
+    '&g2h=1';
   try {
     var hd = UrlFetchApp.fetch(url).getContentText();
     var obj = JSON.parse(hd);
@@ -1110,45 +1110,45 @@ function LunarCalendar() {
   );
 
   this.Gan = new Array(
-    "甲",
-    "乙",
-    "丙",
-    "丁",
-    "戊",
-    "己",
-    "庚",
-    "辛",
-    "壬",
-    "癸"
+    '甲',
+    '乙',
+    '丙',
+    '丁',
+    '戊',
+    '己',
+    '庚',
+    '辛',
+    '壬',
+    '癸'
   );
   this.Zhi = new Array(
-    "子",
-    "丑",
-    "寅",
-    "卯",
-    "辰",
-    "巳",
-    "午",
-    "未",
-    "申",
-    "酉",
-    "戌",
-    "亥"
+    '子',
+    '丑',
+    '寅',
+    '卯',
+    '辰',
+    '巳',
+    '午',
+    '未',
+    '申',
+    '酉',
+    '戌',
+    '亥'
   );
   this.nStr1 = new Array(
-    "",
-    "一",
-    "二",
-    "三",
-    "四",
-    "五",
-    "六",
-    "七",
-    "八",
-    "九",
-    "十"
+    '',
+    '一',
+    '二',
+    '三',
+    '四',
+    '五',
+    '六',
+    '七',
+    '八',
+    '九',
+    '十'
   );
-  this.nStr2 = new Array("初", "十", "廿", "卅", "□");
+  this.nStr2 = new Array('初', '十', '廿', '卅', '□');
 }
 LunarCalendar.prototype = {
   lYearDays: function (y) {
@@ -1172,8 +1172,8 @@ LunarCalendar.prototype = {
     var n1 = Math.floor(n / 10);
     var n0 = n - n1 * 10;
     if (month)
-      return (n1 == 0 ? "" : this.nStr2[n1]) + (n0 == 0 ? "" : this.nStr1[n0]);
-    else return this.nStr2[n1] + (n0 == 0 ? "" : this.nStr1[n0]);
+      return (n1 == 0 ? '' : this.nStr2[n1]) + (n0 == 0 ? '' : this.nStr1[n0]);
+    else return this.nStr2[n1] + (n0 == 0 ? '' : this.nStr1[n0]);
   },
   toLunar: function (objDate) {
     var lunarDate = {};
@@ -1257,14 +1257,14 @@ function shortname(name) {
 }
 */
 function thousandCommas(n, sp) {
-  if (!sp) sp = ",";
+  if (!sp) sp = ',';
   return n.toString().replace(/\B(?=(\d{3})+(?!\d))/g, sp);
 }
 function zeropad(n, size) {
-  n = "" + n; /* Make sure it's a string */
+  n = '' + n; /* Make sure it's a string */
   size = size || 2;
   while (n.length < size) {
-    n = "0" + n;
+    n = '0' + n;
   }
   return n;
 }
@@ -1291,7 +1291,7 @@ function twelve(n) {
 }
 function tzOffset(offset) {
   var s =
-    (offset < 0 ? "+" : "-") + // Note the reversed sign!
+    (offset < 0 ? '+' : '-') + // Note the reversed sign!
     zeropad(my_parseInt(Math.abs(offset / 60)), 2) +
     zeropad(Math.abs(offset % 60), 2);
   return s;
@@ -1303,54 +1303,54 @@ function strftime(format, date, loc) {
   if (locfmtpat.test(format) && !locale[loc]) {
     initializeUserLocale();
   }
-  var l = locale[loc] || locale["en"];
+  var l = locale[loc] || locale['en'];
   var months = l.months,
     days = l.days;
   var hd; //hebrew data
   var fields = {
-    a: l.daysshort[date.getDay()],
-    A: days[date.getDay()],
-    b: l.monthsshort[date.getMonth()],
-    B: months[date.getMonth()],
+    'a': l.daysshort[date.getDay()],
+    'A': days[date.getDay()],
+    'b': l.monthsshort[date.getMonth()],
+    'B': months[date.getMonth()],
     //        c: date.toLocaleString(),
-    d: zeropad(date.getDate()),
-    H: zeropad(date.getHours()),
-    h: zeropad(twelve(date.getHours())),
-    j: getDayOfYear(date),
-    m: zeropad(date.getMonth() + 1),
-    M: zeropad(date.getMinutes()),
-    n: date.getMonth() + 1,
-    N: date.getDate(),
-    p: date.getHours() >= 12 ? "PM" : "AM",
-    S: zeropad(date.getSeconds()),
-    w: zeropad(date.getDay() + 1),
-    W: getWeekMonday(date) + 1,
-    U: getWeek(date) + 1,
+    'd': zeropad(date.getDate()),
+    'H': zeropad(date.getHours()),
+    'h': zeropad(twelve(date.getHours())),
+    'j': getDayOfYear(date),
+    'm': zeropad(date.getMonth() + 1),
+    'M': zeropad(date.getMinutes()),
+    'n': date.getMonth() + 1,
+    'N': date.getDate(),
+    'p': date.getHours() >= 12 ? 'PM' : 'AM',
+    'S': zeropad(date.getSeconds()),
+    'w': zeropad(date.getDay() + 1),
+    'W': getWeekMonday(date) + 1,
+    'U': getWeek(date) + 1,
     //        x: date.toLocaleDateString(),
     //        X: date.toLocaleTimeString(),
-    y: ("" + date.getFullYear()).substr(2, 4),
-    Y: "" + date.getFullYear(),
-    Z: tzOffset(date.getTimezoneOffset()),
-    "%": "%",
+    'y': ('' + date.getFullYear()).substr(2, 4),
+    'Y': '' + date.getFullYear(),
+    'Z': tzOffset(date.getTimezoneOffset()),
+    '%': '%',
   };
-  var result = "",
+  var result = '',
     i = 0,
     len = format.length;
-  var hd = { hy: 0, hm: "-", hd: "-", events: [], hebrew: "-" };
-  var lu = { year: 0, month: "", day: "" };
+  var hd = { hy: 0, hm: '-', hd: '-', events: [], hebrew: '-' };
+  var lu = { year: 0, month: '', day: '' };
   while (i < format.length) {
     if (
-      format[i] === "%" &&
+      format[i] === '%' &&
       i + 3 < len &&
-      format[i + 1] == "H" &&
-      format[i + 2] == "e"
+      format[i + 1] == 'H' &&
+      format[i + 2] == 'e'
     ) {
       if (hd.hy == 0) {
         var key =
-          date.getFullYear() + ":" + date.getMonth() + ":" + date.getDate();
+          date.getFullYear() + ':' + date.getMonth() + ':' + date.getDate();
         if (hebrew_date_cache[key]) hd = hebrew_date_cache[key];
         else {
-          hd.hy = "2016";
+          hd.hy = '2016';
           getHebrew(date, key, function (result) {
             hd = result;
           });
@@ -1358,20 +1358,20 @@ function strftime(format, date, loc) {
       }
       // %HeY, %HeM, %HeD
       switch (format[i + 3]) {
-        case "Y":
+        case 'Y':
           result = result + hd.hy;
           break;
-        case "M":
+        case 'M':
           result = result + hd.hm;
           break;
-        case "D":
+        case 'D':
           result = result + hd.hd;
           break;
-        case "H":
+        case 'H':
           result = result + hd.hebrew;
           break;
-        case "E":
-          result = result + (hd.events ? hd.events.join(", ") : "");
+        case 'E':
+          result = result + (hd.events ? hd.events.join(', ') : '');
           break;
         default:
           result =
@@ -1379,14 +1379,14 @@ function strftime(format, date, loc) {
       }
       i += 3;
     } else if (
-      format[i] === "%" &&
+      format[i] === '%' &&
       i + 3 < len &&
-      format[i + 1] == "L" &&
-      format[i + 2] == "u"
+      format[i + 1] == 'L' &&
+      format[i + 2] == 'u'
     ) {
       if (lu.year == 0) {
         var key =
-          date.getFullYear() + ":" + date.getMonth() + ":" + date.getDate();
+          date.getFullYear() + ':' + date.getMonth() + ':' + date.getDate();
         if (lunar_date_cache[key]) {
           lu = lunar_date_cache[key];
         } else {
@@ -1395,13 +1395,13 @@ function strftime(format, date, loc) {
       }
       // %LuY, %LuM, %LuD
       switch (format[i + 3]) {
-        case "Y":
+        case 'Y':
           result = result + lu.year;
           break;
-        case "M":
+        case 'M':
           result = result + lu.month;
           break;
-        case "D":
+        case 'D':
           result = result + lu.day;
           break;
         default:
@@ -1410,35 +1410,35 @@ function strftime(format, date, loc) {
       }
       i += 3;
     } else if (
-      format[i] === "%" &&
+      format[i] === '%' &&
       i + 3 < len &&
-      format[i + 1] == "e" &&
-      format[i + 2] == "n" &&
-      (format[i + 3] == "b" || format[i + 3] == "B")
+      format[i + 1] == 'e' &&
+      format[i + 2] == 'n' &&
+      (format[i + 3] == 'b' || format[i + 3] == 'B')
     ) {
       // %enB, %enB
       result =
         result +
-        (format[i + 3] == "b"
+        (format[i + 3] == 'b'
           ? locale.en.monthsshort[date.getMonth()]
           : locale.en.months[date.getMonth()]);
       i += 3;
-    } else if (format[i] == "%" && i + 2 < len && format[i + 1] == "*") {
+    } else if (format[i] == '%' && i + 2 < len && format[i + 1] == '*') {
       // %*d, %*H, %*S,
       result = result + my_parseInt(fields[format[i + 2]]);
       i += 2;
-    } else if (format[i] == "%" && i + 2 < len && format[i + 1] == "+") {
+    } else if (format[i] == '%' && i + 2 < len && format[i + 1] == '+') {
       // %+d
       var n = my_parseInt(fields[format[i + 2]]);
       if (n >= 11 && n <= 13) {
-        n = n + "th";
-      } else if (n % 10 == 1) n = n + "st";
-      else if (n % 10 == 2) n = n + "nd";
-      else if (n % 10 == 3) n = n + "rd";
-      else n = n + "th";
+        n = n + 'th';
+      } else if (n % 10 == 1) n = n + 'st';
+      else if (n % 10 == 2) n = n + 'nd';
+      else if (n % 10 == 3) n = n + 'rd';
+      else n = n + 'th';
       result = result + n;
       i += 2;
-    } else if (format[i] === "%" && i + 1 < len) {
+    } else if (format[i] === '%' && i + 1 < len) {
       // one char format, ex %Y, %M
       result = result + fields[format[i + 1]];
       ++i;
