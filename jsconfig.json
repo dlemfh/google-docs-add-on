@@ -1,0 +1,8 @@
+{
+  "compilerOptions": {
+    "lib": ["ES2019"],
+    "checkJs": true,
+    "strict": true,
+    "noImplicitAny": false
+  }
+}
