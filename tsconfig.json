@@ -1,0 +1,23 @@
+{
+  "compilerOptions": {
+    // Project Options
+    "rootDir": "src",
+    "outDir": "dist",
+    "lib": ["esnext", "dom", "dom.iterable"],
+    "sourceMap": true,
+    "declaration": true,
+    "incremental": true,
+
+    // Recommended Options
+    "target": "es6",
+    "module": "commonjs",
+    "strict": true,
+    "allowJs": true,
+    "checkJs": true,
+    "skipLibCheck": true,
+    "esModuleInterop": true,
+    "forceConsistentCasingInFileNames": true
+  },
+  "include": ["src/**/*"],
+  "exclude": ["node_modules", "dist"]
+}
