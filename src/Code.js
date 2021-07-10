@@ -19,8 +19,9 @@ function my_parseInt(s) {
 var userlocale = Session.getActiveUserLocale();
 if (userlocale.indexOf('en_') == 0) userlocale = 'en';
 
-var _userProperties; //singleton
+var _userProperties; // singleton
 function getUserProperty() {
+  // TODO: do we need to cache this singleton????
   if (_userProperties) return _userProperties;
   _userProperties = PropertiesService.getUserProperties();
   return _userProperties;
@@ -51,7 +52,7 @@ function onOpen(e) {
 
 function showCalendar() {
   DocumentApp.getUi().showModelessDialog(
-    HtmlService.createHtmlOutputFromFile('calendar.html')
+    HtmlService.createHtmlOutputFromFile('src/calendar.html')
       .setSandboxMode(HtmlService.SandboxMode.IFRAME)
       .setTitle('Calendar')
       .setHeight(315)
@@ -60,21 +61,8 @@ function showCalendar() {
   );
 }
 
-/*
-function getTextsFile(){
-  // check if the texts file exists, if not copy it.
-  var name = 'TextFactory-TextsOptions'
-  var iter = DriveApp.getFilesByName(name)
-  if (iter.hasNext()) return iter.next()
-  var sampleFileId = '1Iowlz7OOr_r1VABWphroQG8mv42FmEi4LzpQJ_-VPo8'
-  var sampleFile = DriveApp.getFileById(sampleFileId)
-  var myfile = sampleFile.makeCopy(name,DriveApp.getRootFolder())
-  return myfile;
-}
-*/
-
 function setupTZ() {
-  var htmlOutput = HtmlService.createHtmlOutputFromFile('splash.html')
+  var htmlOutput = HtmlService.createHtmlOutputFromFile('src/splash.html')
     .setSandboxMode(HtmlService.SandboxMode.IFRAME)
     .setWidth(300)
     .setHeight(100);
