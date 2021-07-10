@@ -10,5 +10,8 @@
     "url": "git+https://github.com/dlemfh/google-docs-add-on.git"
   },
   "author": "",
-  "license": "ISC"
+  "license": "ISC",
+  "devDependencies": {
+    "@types/google-apps-script": "^1.0.36"
+  }
 }
