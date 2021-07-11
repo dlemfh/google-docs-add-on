@@ -12,6 +12,7 @@
   "author": "",
   "license": "ISC",
   "devDependencies": {
-    "@types/google-apps-script": "^1.0.36"
+    "@types/google-apps-script": "^1.0.36",
+    "prettier-plugin-jsdoc": "^0.3.23"
   }
 }
