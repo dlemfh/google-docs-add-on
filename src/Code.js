@@ -1,9 +1,4 @@
-/**
- * @OnlyCurrentDoc
- */
-
-//debug
-//var s= new Date().getTime();Logger.log(s+' started');
+/** @OnlyCurrentDoc */
 
 function my_parseInt(s) {
   // correct convert 08,09 to 8 and 9
@@ -14,24 +9,6 @@ function my_parseInt(s) {
       : parseInt(s.replace(/^0+/, ''))
     : s;
 }
-
-/* en, zh_TW, ja_JP,ko_KR, */
-var userlocale = Session.getActiveUserLocale();
-if (userlocale.indexOf('en_') == 0) userlocale = 'en';
-
-var _userProperties; // singleton
-function getUserProperty() {
-  // TODO: do we need to cache this singleton????
-  if (_userProperties) return _userProperties;
-  _userProperties = PropertiesService.getUserProperties();
-  return _userProperties;
-}
-// //debug - reset properties
-// function sanitizeProperties(){
-//   getUserProperty().deleteAllProperties();
-// }
-//var objs = userProperties.getProperties()
-//for (var key in objs){Logger.log('PROP:'+key+'='+objs[key])};
 
 function onInstall(e) {
   onOpen(e);
@@ -53,7 +30,6 @@ function onOpen(e) {
 function showCalendar() {
   DocumentApp.getUi().showModelessDialog(
     HtmlService.createHtmlOutputFromFile('src/calendar.html')
-      .setSandboxMode(HtmlService.SandboxMode.IFRAME)
       .setTitle('Calendar')
       .setHeight(315)
       .setWidth(270),
@@ -79,21 +55,6 @@ function getDefaultFormats() {
     '%Y/%m/%d %p%h:%M',
     '%b %d, %Y',
   ];
-}
-function getProperties() {
-  //var userProperties = PropertiesService.getUserProperties();
-  var formats;
-  var fmts = getUserProperty().getProperty('formats');
-  if (fmts) formats = fmts.split('\t');
-  else formats = getDefaultFormats();
-
-  return { formats: formats };
-}
-function setProperty(key, value) {
-  getUserProperty().setProperty(key, value);
-}
-function deleteProperty(key) {
-  PropertiesService.getUserProperties().deleteProperty(key);
 }
 /* utilities */
 // create locale for strftime
@@ -139,65 +100,6 @@ var locale = {
     ],
   },
 };
-function initializeUserLocale() {
-  var uprop = getUserProperty();
-  if (userlocale != 'en') {
-    var currentLocale = uprop.getProperty('userlocale');
-    if (currentLocale == userlocale) {
-      //do nothing
-      //Logger.log('resue locale: '+userlocale)
-    } else {
-      //locale changed, clear current cached properties
-      //Logger.log('reset locale cache to '+userlocale+' from '+currentLocale+' @'+new Date())
-      var objs = uprop.getProperties();
-      var prefix = '*' + userlocale;
-      var keeps = { userlocale: userlocale };
-      for (var key in objs) {
-        if (key.substr(0, 1) != '*' || key.indexOf(prefix) == 0) {
-          keeps[key] = objs[key];
-        }
-        //else Logger.log('remove property:'+key);
-      }
-      //userProperties.deleteAllProperties();
-      uprop.setProperties(keeps, true);
-    }
-    var days = [],
-      daysshort = [],
-      months = [],
-      monthsshort = [],
-      x;
-    for (var i = 0; i < 7; i++) {
-      x = locale.en.days[i];
-      if (x === null) {
-        for (var k = i; k < 7; k++) {
-          days.push(locale.en.days[k]);
-          daysshort.push(locale.en.days[k]);
-        }
-        break;
-      }
-      days.push(x);
-      daysshort.push(x);
-    }
-    for (var i = 0; i < 12; i++) {
-      x = locale.en.months[i];
-      if (x === null) {
-        for (var k = i; k < 12; k++) {
-          days.push(locale.en.months[k]);
-          daysshort.push(locale.en.months[k]);
-        }
-        break;
-      }
-      months.push(x);
-      monthsshort.push(x);
-    }
-    locale[userlocale] = {
-      days: days,
-      months: months,
-      daysshort: daysshort,
-      monthsshort: monthsshort,
-    };
-  }
-}
 
 /* manipulation the doc starts*/
 function getSelection(warnning) {
